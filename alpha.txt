@@ -1,8 +1,1 @@
-https://app.flocareer.com/dynamic/candidates/ssoLogin/?corp_id=4109&cand_id=958754&auth_token=bee439a6b5b6e54a99e8f31dd8a2c06b&redirect_uri=https://app.flocareer.com/jobseeker/%23/candidate-slots-modification/reschedule-interview/1779932&is_tmpl=true
-
-
-https://app.flocareer.com/dynamic/candidates/ssoLogin/?corp_id=4109&cand_id=958754&auth_token=bee439a6b5b6e54a99e8f31dd8a2c06b&redirect_uri=https://app.flocareer.com/flo2.0/interview/%3Freq=40616%26claim=1779932&is_tmpl=true
-
-checking to upload
-https://us05web.zoom.us/j/86742123722?pwd=8cNmrpZfaQgQC4UIpleJMEYaWSYrIY.1
-https://meet.google.com/hpr-vcrr-rpm
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_OWRiYTNmMmEtMmZlZC00YjcxLWEzODQtZjk2ZDBmYzk3ODYx%40thread.v2/0?context=%7b%22Tid%22%3a%2260d4c39a-f31f-4638-bb43-8822172b892d%22%2c%22Oid%22%3a%223dec6a37-aa10-47b5-a176-644b49a3421f%22%7d
