@@ -1,1 +1,125 @@
-https://meet.google.com/bcz-oara-wfi
+
+curl --location 'https://www.py.pitchfit.ai/modeling/estimate_user_base_assumption_values' \
+--header 'accept: application/json' \
+--header 'Content-Type: application/json' \
+--data '{
+    "formula": {
+        "Step 1: Identify the size of the population in scope": [
+            "Indian_Subcontinent_Tech_Aware_Population = India_Total_Population * India_AI_Tech_Aware_Population_Share / 100",
+            "Middle_East_and_Africa_Tech_Aware_Population = UAE_Total_Population * UAE_AI_Tech_Aware_Population_Share / 100",
+            "UK_and_Europe_Tech_Aware_Population = UK_Total_Population * UK_AI_Tech_Aware_Population_Share / 100",
+            "Indian_Subcontinent_High_Income_LLM_Users = Indian_Subcontinent_Tech_Aware_Population * High_Income_Share_India / 100 * High_Income_LLM_Adoption_Rate / 100",
+            "Indian_Subcontinent_Mid_Income_LLM_Users = Indian_Subcontinent_Tech_Aware_Population * Mid_Income_Share_India / 100 * Mid_Income_LLM_Adoption_Rate / 100",
+            "Indian_Subcontinent_Low_Income_LLM_Users = Indian_Subcontinent_Tech_Aware_Population * Low_Income_Share_India / 100 * Low_Income_LLM_Adoption_Rate / 100",
+            "Middle_East_and_Africa_High_Income_LLM_Users = Middle_East_and_Africa_Tech_Aware_Population * High_Income_Share_UAE / 100 * High_Income_LLM_Adoption_Rate / 100",
+            "Middle_East_and_Africa_Mid_Income_LLM_Users = Middle_East_and_Africa_Tech_Aware_Population * Mid_Income_Share_UAE / 100 * Mid_Income_LLM_Adoption_Rate / 100",
+            "Middle_East_and_Africa_Low_Income_LLM_Users = Middle_East_and_Africa_Tech_Aware_Population * Low_Income_Share_UAE / 100 * Low_Income_LLM_Adoption_Rate / 100",
+            "UK_and_Europe_High_Income_LLM_Users = UK_and_Europe_Tech_Aware_Population * High_Income_Share_UK / 100 * High_Income_LLM_Adoption_Rate / 100",
+            "UK_and_Europe_Mid_Income_LLM_Users = UK_and_Europe_Tech_Aware_Population * Mid_Income_Share_UK / 100 * Mid_Income_LLM_Adoption_Rate / 100",
+            "UK_and_Europe_Low_Income_LLM_Users = UK_and_Europe_Tech_Aware_Population * Low_Income_Share_UK / 100 * Low_Income_LLM_Adoption_Rate / 100"
+        ],
+        "Step 2: Identify the growth rate of the segment": [
+            "Total_Indian_Subcontinent_High_Income_LLM_Users = Indian_Subcontinent_High_Income_LLM_Users * (1 + Indian_Subcontinent_Population_Growth_Rate / 100)",
+            "Total_Indian_Subcontinent_Mid_Income_LLM_Users = Indian_Subcontinent_Mid_Income_LLM_Users * (1 + Indian_Subcontinent_Population_Growth_Rate / 100)",
+            "Total_Indian_Subcontinent_Low_Income_LLM_Users = Indian_Subcontinent_Low_Income_LLM_Users * (1 + Indian_Subcontinent_Population_Growth_Rate / 100)",
+            "Total_Middle_East_and_Africa_High_Income_LLM_Users = Middle_East_and_Africa_High_Income_LLM_Users * (1 + Middle_East_and_Africa_Population_Growth_Rate / 100)",
+            "Total_Middle_East_and_Africa_Mid_Income_LLM_Users = Middle_East_and_Africa_Mid_Income_LLM_Users * (1 + Middle_East_and_Africa_Population_Growth_Rate / 100)",
+            "Total_Middle_East_and_Africa_Low_Income_LLM_Users = Middle_East_and_Africa_Low_Income_LLM_Users * (1 + Middle_East_and_Africa_Population_Growth_Rate / 100)",
+            "Total_UK_and_Europe_High_Income_LLM_Users = UK_and_Europe_High_Income_LLM_Users * (1 + UK_and_Europe_Population_Growth_Rate / 100)",
+            "Total_UK_and_Europe_Mid_Income_LLM_Users = UK_and_Europe_Mid_Income_LLM_Users * (1 + UK_and_Europe_Population_Growth_Rate / 100)",
+            "Total_UK_and_Europe_Low_Income_LLM_Users = UK_and_Europe_Low_Income_LLM_Users * (1 + UK_and_Europe_Population_Growth_Rate / 100)"
+        ],
+        "Step 3: Company market share": [
+            "Indian_Subcontinent_High_Income_Addressable_Market = Total_Indian_Subcontinent_High_Income_LLM_Users * Indian_Subcontinent_High_Income_Market_Share / 100",
+            "Indian_Subcontinent_Mid_Income_Addressable_Market = Total_Indian_Subcontinent_Mid_Income_LLM_Users * Indian_Subcontinent_Mid_Income_Market_Share / 100",
+            "Indian_Subcontinent_Low_Income_Addressable_Market = Total_Indian_Subcontinent_Low_Income_LLM_Users * Indian_Subcontinent_Low_Income_Market_Share / 100",
+            "Middle_East_and_Africa_High_Income_Addressable_Market = Total_Middle_East_and_Africa_High_Income_LLM_Users * Middle_East_and_Africa_High_Income_Market_Share / 100",
+            "Middle_East_and_Africa_Mid_Income_Addressable_Market = Total_Middle_East_and_Africa_Mid_Income_LLM_Users * Middle_East_and_Africa_Mid_Income_Market_Share / 100",
+            "Middle_East_and_Africa_Low_Income_Addressable_Market = Total_Middle_East_and_Africa_Low_Income_LLM_Users * Middle_East_and_Africa_Low_Income_Market_Share / 100",
+            "UK_and_Europe_High_Income_Addressable_Market = Total_UK_and_Europe_High_Income_LLM_Users * UK_and_Europe_High_Income_Market_Share / 100",
+            "UK_and_Europe_Mid_Income_Addressable_Market = Total_UK_and_Europe_Mid_Income_LLM_Users * UK_and_Europe_Mid_Income_Market_Share / 100",
+            "UK_and_Europe_Low_Income_Addressable_Market = Total_UK_and_Europe_Low_Income_LLM_Users * UK_and_Europe_Low_Income_Market_Share / 100"
+        ],
+        "Step 4: Factor gains and losses of customers from and to competitors": [
+            "Indian_Subcontinent_High_Income_Churn = Indian_Subcontinent_High_Income_Addressable_Market * Indian_Subcontinent_High_Income_Churn_per_annum / 100",
+            "Indian_Subcontinent_Mid_Income_Churn = Indian_Subcontinent_Mid_Income_Addressable_Market * Indian_Subcontinent_Mid_Income_Churn_per_annum / 100",
+            "Indian_Subcontinent_Low_Income_Churn = Indian_Subcontinent_Low_Income_Addressable_Market * Indian_Subcontinent_Low_Income_Churn_per_annum / 100",
+            "Middle_East_and_Africa_High_Income_Churn = Middle_East_and_Africa_High_Income_Addressable_Market * Middle_East_and_Africa_High_Income_Churn_per_annum / 100",
+            "Middle_East_and_Africa_Mid_Income_Churn = Middle_East_and_Africa_Mid_Income_Addressable_Market * Middle_East_and_Africa_Mid_Income_Churn_per_annum / 100",
+            "Middle_East_and_Africa_Low_Income_Churn = Middle_East_and_Africa_Low_Income_Addressable_Market * Middle_East_and_Africa_Low_Income_Churn_per_annum / 100",
+            "UK_and_Europe_High_Income_Churn = UK_and_Europe_High_Income_Addressable_Market * UK_and_Europe_High_Income_Churn_per_annum / 100",
+            "UK_and_Europe_Mid_Income_Churn = UK_and_Europe_Mid_Income_Addressable_Market * UK_and_Europe_Mid_Income_Churn_per_annum / 100",
+            "UK_and_Europe_Low_Income_Churn = UK_and_Europe_Low_Income_Addressable_Market * UK_and_Europe_Low_Income_Churn_per_annum / 100"
+        ],
+        "Step 5: Total user base": [
+            "Indian_Subcontinent_High_Income_Net_Users = Indian_Subcontinent_High_Income_Addressable_Market - Indian_Subcontinent_High_Income_Churn",
+            "Indian_Subcontinent_Mid_Income_Net_Users = Indian_Subcontinent_Mid_Income_Addressable_Market - Indian_Subcontinent_Mid_Income_Churn",
+            "Indian_Subcontinent_Low_Income_Net_Users = Indian_Subcontinent_Low_Income_Addressable_Market - Indian_Subcontinent_Low_Income_Churn",
+            "Middle_East_and_Africa_High_Income_Net_Users = Middle_East_and_Africa_High_Income_Addressable_Market - Middle_East_and_Africa_High_Income_Churn",
+            "Middle_East_and_Africa_Mid_Income_Net_Users = Middle_East_and_Africa_Mid_Income_Addressable_Market - Middle_East_and_Africa_Mid_Income_Churn",
+            "Middle_East_and_Africa_Low_Income_Net_Users = Middle_East_and_Africa_Low_Income_Addressable_Market - Middle_East_and_Africa_Low_Income_Churn",
+            "UK_and_Europe_High_Income_Net_Users = UK_and_Europe_High_Income_Addressable_Market - UK_and_Europe_High_Income_Churn",
+            "UK_and_Europe_Mid_Income_Net_Users = UK_and_Europe_Mid_Income_Addressable_Market - UK_and_Europe_Mid_Income_Churn",
+            "UK_and_Europe_Low_Income_Net_Users = UK_and_Europe_Low_Income_Addressable_Market - UK_and_Europe_Low_Income_Churn",
+            "Total_user_base = Indian_Subcontinent_High_Income_Net_Users + Indian_Subcontinent_Mid_Income_Net_Users + Indian_Subcontinent_Low_Income_Net_Users + Middle_East_and_Africa_High_Income_Net_Users + Middle_East_and_Africa_Mid_Income_Net_Users + Middle_East_and_Africa_Low_Income_Net_Users + UK_and_Europe_High_Income_Net_Users + UK_and_Europe_Mid_Income_Net_Users + UK_and_Europe_Low_Income_Net_Users"
+        ]
+    },
+    "assumptions": {
+        "India_Total_Population": 1420000000,
+        "UAE_Total_Population": 10000000,
+        "UK_Total_Population": 67000000,
+        "India_AI_Tech_Aware_Population_Share": 15,
+        "UAE_AI_Tech_Aware_Population_Share": 35,
+        "UK_AI_Tech_Aware_Population_Share": 45,
+        "High_Income_Share_India": 10,
+        "Mid_Income_Share_India": 25,
+        "Low_Income_Share_India": 65,
+        "High_Income_Share_UAE": 40,
+        "Mid_Income_Share_UAE": 45,
+        "Low_Income_Share_UAE": 15,
+        "High_Income_Share_UK": 30,
+        "Mid_Income_Share_UK": 50,
+        "Low_Income_Share_UK": 20,
+        "High_Income_LLM_Adoption_Rate": 25,
+        "Mid_Income_LLM_Adoption_Rate": 12,
+        "Low_Income_LLM_Adoption_Rate": 3,
+        "Indian_Subcontinent_Population_Growth_Rate": 2.5,
+        "Middle_East_and_Africa_Population_Growth_Rate": 2.8,
+        "UK_and_Europe_Population_Growth_Rate": 2.2,
+        "Indian_Subcontinent_High_Income_Market_Share": 8,
+        "Indian_Subcontinent_Mid_Income_Market_Share": 12,
+        "Indian_Subcontinent_Low_Income_Market_Share": 15,
+        "Middle_East_and_Africa_High_Income_Market_Share": 6,
+        "Middle_East_and_Africa_Mid_Income_Market_Share": 10,
+        "Middle_East_and_Africa_Low_Income_Market_Share": 18,
+        "UK_and_Europe_High_Income_Market_Share": 5,
+        "UK_and_Europe_Mid_Income_Market_Share": 8,
+        "UK_and_Europe_Low_Income_Market_Share": 12,
+        "Indian_Subcontinent_High_Income_Churn_per_annum": 15,
+        "Indian_Subcontinent_Mid_Income_Churn_per_annum": 12,
+        "Indian_Subcontinent_Low_Income_Churn_per_annum": 20,
+        "Middle_East_and_Africa_High_Income_Churn_per_annum": 10,
+        "Middle_East_and_Africa_Mid_Income_Churn_per_annum": 8,
+        "Middle_East_and_Africa_Low_Income_Churn_per_annum": 18,
+        "UK_and_Europe_High_Income_Churn_per_annum": 8,
+        "UK_and_Europe_Mid_Income_Churn_per_annum": 6,
+        "UK_and_Europe_Low_Income_Churn_per_annum": 12
+    },
+    "analysis_time_frame": [
+        "H1 2025",
+        "H2 2025"
+    ],
+    "period_ranges": [
+        [
+            "january",
+            "June",
+            2025
+        ],
+        [
+            "July",
+            "december",
+            2025
+        ]
+    ],
+    "user_description": "I want to open a competitor for OpenAI which provides 4 LLM subscriptions. I want to build a financial model which tests the feasibility and the overall return of this. i want to structure the model per subscription model, and want to have the model for 5 years straight, starting from 2026 January. I want to operate in both India, Dubai and London"
+}'
