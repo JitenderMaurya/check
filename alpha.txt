@@ -1,4 +1,4 @@
-
+https://us04web.zoom.us/j/4382409227?pwd=VUw4YlZoQXFmSWkrSXgydlRrbkxaZz09
 curl --location 'https://www.py.pitchfit.ai/modeling/estimate_user_base_assumption_values' \
 --header 'accept: application/json' \
 --header 'Content-Type: application/json' \
