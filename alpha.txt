@@ -1,3 +1,15 @@
+[30/06, 9:35 pm] Yahya El Ali: Joining?
+[30/06, 10:10 pm] Yahya El Ali: https://www.airarabia.com/sites/airarabia/files/AIR%20ARABIA%20PJSC%20AND%20ITS%20SUBSIDIARIES%20DEC%202022.pdf
+[30/06, 10:11 pm] Yahya El Ali: https://www.airarabia.com/sites/airarabia/files/gallery/AIR-ARABIA-PJSC-DEC-2021.pdf
+[30/06, 10:11 pm] Yahya El Ali: https://www.airarabia.com/sites/airarabia/files/gallery/AIR%20ARABIA%20English%20-2020.pdf
+[30/06, 10:11 pm] Yahya El Ali: https://www.airarabia.com/sites/airarabia/files/gallery/AIR%20ARABIA%202019.pdf
+[30/06, 10:11 pm] Yahya El Ali: https://investor.turkishairlines.com/documents/finansal-raporlar/31_12_2024-usd-ifrs.pdf
+[30/06, 10:11 pm] Yahya El Ali: regular PDF
+[30/06, 10:12 pm] Yahya El Ali: https://www.airfranceklm.com/sites/default/files/2025-03/2024.12-consolidated-financial-statements-and-notes-afkl-as-of-december-31-2024.pdf
+
+
+
+
 https://us04web.zoom.us/j/4382409227?pwd=VUw4YlZoQXFmSWkrSXgydlRrbkxaZz09
 curl --location 'https://www.py.pitchfit.ai/modeling/estimate_user_base_assumption_values' \
 --header 'accept: application/json' \
