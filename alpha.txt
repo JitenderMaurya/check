@@ -1,13 +1,43 @@
-[30/06, 9:35 pm] Yahya El Ali: Joining?
-[30/06, 10:10 pm] Yahya El Ali: https://www.airarabia.com/sites/airarabia/files/AIR%20ARABIA%20PJSC%20AND%20ITS%20SUBSIDIARIES%20DEC%202022.pdf
-[30/06, 10:11 pm] Yahya El Ali: https://www.airarabia.com/sites/airarabia/files/gallery/AIR-ARABIA-PJSC-DEC-2021.pdf
-[30/06, 10:11 pm] Yahya El Ali: https://www.airarabia.com/sites/airarabia/files/gallery/AIR%20ARABIA%20English%20-2020.pdf
-[30/06, 10:11 pm] Yahya El Ali: https://www.airarabia.com/sites/airarabia/files/gallery/AIR%20ARABIA%202019.pdf
-[30/06, 10:11 pm] Yahya El Ali: https://investor.turkishairlines.com/documents/finansal-raporlar/31_12_2024-usd-ifrs.pdf
-[30/06, 10:11 pm] Yahya El Ali: regular PDF
-[30/06, 10:12 pm] Yahya El Ali: https://www.airfranceklm.com/sites/default/files/2025-03/2024.12-consolidated-financial-statements-and-notes-afkl-as-of-december-31-2024.pdf
 
-
+curl --location 'https://www.py.pitchfit.ai/modeling/fetch_revenue_formula_assumption' \
+--header 'accept: application/json' \
+--header 'Content-Type: application/json' \
+--data '{
+    "user_description": "I want to open a competitor for OpenAI which provides 4 LLM subscriptions. I want to build a financial model which tests the feasibility and the overall return of this. i want to structure the model per subscription model, and want to have the model for 5 years straight, starting from 2026 January. I want to operate in both India, Dubai and London",
+    "total_user": [
+        "UK_Europe_High_Income_Net_Users",
+        "UK_Europe_Mid_Income_Net_Users",
+        "UK_Europe_Low_Income_Net_Users",
+        "Middle_East_Africa_High_Income_Net_Users",
+        "Middle_East_Africa_Mid_Income_Net_Users",
+        "Middle_East_Africa_Low_Income_Net_Users",
+        "Indian_Subcontinent_High_Income_Net_Users",
+        "Indian_Subcontinent_Mid_Income_Net_Users",
+        "Indian_Subcontinent_Low_Income_Net_Users"
+    ],
+    "billing": "base subscription is billed quarteyly, premium subscription is billed halfyearly and yearly",
+    "additional_revenue": "yes, consider 6% of the total revene obtained from the LLM subscriptions",
+    "revenue_sources_splits": [
+        "LLM Subscriptions (%)",
+        "Other Revenue Streams (%)"
+    ],
+    "revenue_sources_splits_with_cross_selling": {
+        "Base Subscription (%)": 40,
+        "Premium Subscription (%)": 30,
+        "Executive Subscription (%)": 15,
+        "Extramile Subscription (%)": 5,
+        "Base and Premium Subscription (%)": 5,
+        "Premium and Executive Subscription (%)": 5
+    },
+    "currency": "usd",
+    "interval": "halfyearly",
+    "price_key": [
+        "Base_Subscription_quarterly_price (usd)",
+        "Premium_Subscription_halfyearly_price (usd)",
+        "Premium_Subscription_yearly_price (usd)",
+        "Executive_Subscription_halfyearly_price (usd)"
+    ]
+}'
 
 
 https://us04web.zoom.us/j/4382409227?pwd=VUw4YlZoQXFmSWkrSXgydlRrbkxaZz09
