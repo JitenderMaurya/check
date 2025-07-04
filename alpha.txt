@@ -1,4 +1,12 @@
-
+[04/07, 4:20 pm] Yahya El Ali: https://www.alahli.com/-/media/project/snb/snb-web/about-us/02-1-investor-relations/financial-information/financial-statements/english/SNB-English-YE-2024-Financials-Final.pdf?view=1
+[04/07, 4:21 pm] Yahya El Ali: https://s29.q4cdn.com/310188824/files/doc_financials/2024/ar/TMUS-2024-Annual-Report.pdf
+[04/07, 4:22 pm] Yahya El Ali: https://reports.investors.vodafone.com/view/197179846/
+[04/07, 4:23 pm] Yahya El Ali: https://www.aramco.com/-/media/publications/corporate-reports/reports-and-presentations/2023/fy/saudi-aramco-fy-2023-full-financials-english.pdf
+[04/07, 4:24 pm] Yahya El Ali: https://marriott.gcs-web.com/static-files/b82978a6-9d28-4e38-9855-fc4ae2cebe11
+[04/07, 4:25 pm] Yahya El Ali: https://www.airfranceklm.com/sites/default/files/2025-03/2024.12-consolidated-financial-statements-and-notes-afkl-as-of-december-31-2024.pdf
+[04/07, 4:29 pm] Yahya El Ali: https://www.marshmclennan.com/web-assets/files-for-download/investors/2025/pdf-2024-marsh-mclennan-investors-annual-report.pdf
+[04/07, 4:29 pm] Yahya El Ali: https://c.ekstatic.net/ecl/documents/annual-report/2024-2025.pdf
+[04/07, 4:31 pm] Yahya El Ali: Those are eight financial statements which are not easy to test as we discussed!
 curl -X 'POST' \
   'https://www.py.pitchfit.ai/modeling/compute_user_base' \
   -H 'accept: application/json' \
