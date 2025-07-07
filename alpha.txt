@@ -1,3 +1,223 @@
+import time
+from llama_index.core.node_parser.relational.markdown_element import MarkdownElementNodeParser
+from llama_parse import LlamaParse
+llamaparse_key = 
+import re
+import anthropic
+import json
+import httpx
+import re
+client = anthropic.Anthropic(api_key="sk-ant-api03-MTJQgC3-5EaQ6vRqs4tSA3kmVeaeHcmmNS1nFkvQObj90QTwIkP3ZpdhHDA3_-Q8JJI8j1B45wW33DbQUZdelQ", http_client=httpx.Client(verify=False))
+
+pdfpath = "/home/test/jitender/financial-insights-main/financial-insights-main/Ryanair-2024-Annual-Report.pdf"
+#out = extract_text_from_pdf_llamaparse(pdfpath,240)
+parse_instructions = f'''
+    The provided document is document. 
+    It contains detailed financial information, management discussion, key performance metrics, 
+    and many tables summarizing data. 
+    Separate text and tables clearly in the output. For the text, create a markdown section heading like '## Text Section 1' 
+    for each distinct text section. For each table, add a markdown table heading like '## Table 1: [Table Name]' before the table. 
+    Ensure that text and tables are clearly distinguishable.
+    '''
+parser = LlamaParse(
+    api_key=llamaparse_key,  # can also be set in your env as LLAMA_CLOUD_API_KEY
+    result_type="markdown",  # "markdown" and "text" are available
+    parsing_instruction = parse_instructions,
+    #target_pages=output_pages,
+    num_workers = 8,
+    verbose=True)
+
+parsed_data_original = parser.load_data(pdfpath)
+
+#.......................................................................MIne.................................
+import nest_asyncio
+from llama_parse import LlamaParse
+from llama_index.core import SimpleDirectoryReader
+
+# Allow async operations in environments like Jupyter
+nest_asyncio.apply()
+
+# Your LlamaParse API key
+#llamaparse_key = llamaparse_key
+
+# Refined parser
+parser = LlamaParse(
+    api_key=llamaparse_key,
+    result_type="markdown",  # preserves text and tables well
+    verbose=True,
+    parse_mode="parse_page_with_layout_agent",
+    user_prompt=(
+    "You are parsing a detailed financial report containing management discussions, financial statements, and tabular data. "
+    "For the text, create a markdown section heading like '## Text Section 1' for each distinct text section. For each table, add a markdown table heading like '## Table 1: [Table Name]' before the table."
+    "Follow these strict instructions for high-quality structured extraction:\n\n"
+
+    "**General Instructions:**\n"
+    "- Do NOT parse or include any images, logos, charts, or image captions.\n"
+    "- Ignore footers, page numbers, and repeated headers unless they provide unique, meaningful content.\n\n"
+    "- Always maintain clear currency and date."
+    "- Dont add any additional information or comments that are not present in the document.\n\n"
+
+    "**Text Parsing:**\n"
+    "- Parse all textual sections clearly and fully.\n"
+    "- If the page uses a two-column layout, **first parse the left column top-to-bottom, then the right column top-to-bottom**.\n"
+    "- Do NOT alternate between columns while parsing.\n"
+    "- Use markdown headers like `## Text Section: [Section Title]` for Text sections.\n\n"
+
+    "**Table Parsing:**\n"
+    "- Tables may not always be enclosed with lines — identify such cases based on structure and spacing. Make sure Format table in proper table format with separating values using **|** or **_** in verticaly and horizontally\n"
+    "- Ensure all tables are parsed **clearly, with correct alignment, column headers, subheaders, and footnotes**.\n"
+    "- Mention any currency units present in the table (e.g., USD, EUR, INR). very clearly\n"
+    "- Use markdown headers like `## Table: [Table Description]` before each table. The description related to the table must be clear as it is. \n\n"
+
+    "Output must be in well-structured markdown format, cleanly separating text and tables."
+)
+)
+
+# Load PDF
+file_path = "/home/test/jitender/financial-insights-main/financial-insights-main/polymed_annual_report.pdf"
+pdf_path = "/home/test/jitender/financial-insights-main/financial-insights-main/financial_report_rotated1.pdf"
+#AIR ARABIA PJSC AND ITS SUBSIDIARIES DEC 2022
+documents = parser.load_data(pdf_path)  # or use await parser.aload_data(path) if you're async
+
+# Inspect output
+for doc in documents:
+    #print(f"\n=== Page {doc.metadata.get('page_label')} ===\n")
+    print(doc.text)
+#..................................................................................................................
+Scanned PDF
+from pdf2image import convert_from_path
+from PIL import Image
+import pytesseract
+import img2pdf
+from io import BytesIO
+
+pdf_path = "/home/test/jitender/financial-insights-main/financial-insights-main/SNB-English-YE-2024-Financials-Final.pdf"
+images = convert_from_path(pdf_path)
+
+image_bytes_list = []
+print(type(images))
+for i, img in enumerate(images):
+    # Detect orientation using Tesseract
+    osd = pytesseract.image_to_osd(img)
+    rotation_angle = 0
+    for line in osd.splitlines():
+        if "Rotate" in line:
+            rotation_angle = int(line.split(":")[1].strip())
+            break
+
+    # Rotate image if needed
+    if rotation_angle == 90:
+        img = img.rotate(-90, expand=True)
+    elif rotation_angle == 270:
+        img = img.rotate(90, expand=True)
+    elif rotation_angle == 180:
+        img = img.rotate(180, expand=True)
+
+    # Save image to memory
+    img_byte = BytesIO()
+    img.save(img_byte, format="JPEG")
+    img_byte.seek(0)
+    image_bytes_list.append(img_byte)
+
+# Convert all in-memory images to a single PDF
+with open("SNB-English-YE-2024-Financials-Final_corrected.pdf", "wb") as f:
+    f.write(img2pdf.convert(image_bytes_list))
+#..................................................................................................
+
+import fitz  # PyMuPDF
+import pdb
+def get_longest_words(page, top_n=5):
+    words = page.get_text("words")  # (x0, y0, x1, y1, word, block_no, line_no, word_no)
+    out = page.get_text("dict")
+    #pdb.set_trace()
+    no_rot =0
+    left_rot =0
+    right_rot =0
+    print('len--', len(out['blocks']))
+    if len(out['blocks'])==0:
+        return 0
+    mid_sec = int(len(out['blocks'])/2)
+    if 'lines' in list(out['blocks'][mid_sec].keys()):
+        word_length = len(out['blocks'][mid_sec]['lines'])
+    else:
+        word_length = 0
+    mx_len = min(20, word_length)
+    for i in range(mx_len):
+        dir = out['blocks'][mid_sec]['lines'][i]['dir']
+        if dir==(1.0,0.0):
+            no_rot+=1
+        elif dir==(0.0,1.0):
+            left_rot+=1
+        elif dir==(0.0,-1.0):
+            right_rot+=1
+    mx_val = max(no_rot,left_rot,right_rot)
+    if mx_val==no_rot:
+        return 0
+    elif mx_val==left_rot:
+        return -90
+    else:
+        return 90
+
+def determine_rotation(words):
+    vertical_up = 0
+    vertical_down = 0
+    horizontal = 0
+
+    for word in words:
+        x0, y0, x1, y1 = word[:4]
+        dx = x1 - x0
+        dy = y1 - y0
+
+        if abs(dy) > abs(dx):  # Vertical orientation
+            if dy > 0:
+                vertical_down += 1  # Top to bottom → rotated 90°
+            else:
+                vertical_up += 1    # Bottom to top → rotated -90°
+        else:
+            horizontal += 1
+
+    if vertical_down > vertical_up and vertical_down > horizontal:
+        return -90  # Rotate counter-clockwise to fix 90° rotation
+    elif vertical_up > vertical_down and vertical_up > horizontal:
+        return 90   # Rotate clockwise to fix -90° rotation
+    else:
+        return 0    # No rotation needed
+
+def rotate_pdf_based_on_text_orientation(input_pdf, output_pdf):
+    doc = fitz.open(input_pdf)
+    for i, page in enumerate(doc):
+        #longest_words = get_longest_words(page)
+        
+        rotation = get_longest_words(page)
+        print(i,'-->', rotation)
+        if rotation != 0:
+            page.set_rotation((page.rotation + rotation) % 360)
+            print(f"Rotated page {i + 1} by {rotation} degrees.")
+    doc.save(output_pdf)
+    doc.close()
+    print(f"Saved rotated PDF as: {output_pdf}")
+
+# Example usage
+input_pdf_path = "/home/test/jitender/financial-insights-main/financial-insights-main/SNB-English-YE-2024-Financials-Final.pdf"
+output_pdf_path = "SNB_rotated.pdf"
+rotate_pdf_based_on_text_orientation(input_pdf_path, output_pdf_path)
+
+#46[(237.41261291503906, 756.2666625976562, 245.21922302246094, 809.2857055664062, '(Taxonomy-aligned)', 11, 1, 0), (261.3501281738281, 757.4255981445312, 269.15673828125, 809.2857055664062, '(Taxonomy-aligned)', 12, 1, 0), (209.9453582763672, 753.59228515625, 217.75196838378906, 802.3221435546875, 'Taxonomy-eligible', 10, 0, 1), (322.573486328125, 750.2413940429688, 330.3800964355469, 798.9747314453125, 'Taxonomy-eligible', 15, 0, 1), (394.3860778808594, 730.8330688476562, 402.19268798828125, 778.1456909179688, 'Taxonomy-eligible', 18, 0, 2)]
+#47[(346.0103454589844, 49.2236328125, 353.81695556640625, 102.2457275390625, '(Taxonomy-aligned)', 11, 1, 0), (322.1551818847656, 49.2236328125, 329.9617919921875, 101.08386993408203, '(Taxonomy-aligned)', 12, 1, 0), (373.3952331542969, 56.18719482421875, 381.20184326171875, 104.91714477539062, 'Taxonomy-eligible', 10, 0, 1), (261.1789245605469, 59.53472900390625, 268.98553466796875, 108.26815795898438, 'Taxonomy-eligible', 15, 0, 1), (189.61343383789062, 73.97979736328125, 197.4200439453125, 121.29255676269531, 'Taxonomy-eligible', 18, 0, 2)]
+
+
+
+
+
+#............................................................
+
+
+
+
+
+
+
+
 [04/07, 4:20 pm] Yahya El Ali: https://www.alahli.com/-/media/project/snb/snb-web/about-us/02-1-investor-relations/financial-information/financial-statements/english/SNB-English-YE-2024-Financials-Final.pdf?view=1
 [04/07, 4:21 pm] Yahya El Ali: https://s29.q4cdn.com/310188824/files/doc_financials/2024/ar/TMUS-2024-Annual-Report.pdf
 [04/07, 4:22 pm] Yahya El Ali: https://reports.investors.vodafone.com/view/197179846/
