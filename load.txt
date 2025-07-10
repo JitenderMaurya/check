@@ -1,3 +1,23 @@
+curl 'https://www.py.pitchfit.ai/modeling/fetch_cost_formula_assumption' \
+  -H 'Accept: application/json, text/plain, */*' \
+  -H 'Accept-Language: en-US,en;q=0.9' \
+  -H 'Cache-Control: no-cache' \
+  -H 'Connection: keep-alive' \
+  -H 'Content-Type: application/json' \
+  -H 'Origin: https://pitchfit.ai' \
+  -H 'Pragma: no-cache' \
+  -H 'Referer: https://pitchfit.ai/' \
+  -H 'Sec-Fetch-Dest: empty' \
+  -H 'Sec-Fetch-Mode: cors' \
+  -H 'Sec-Fetch-Site: same-site' \
+  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36' \
+  -H 'sec-ch-ua: "Not)A;Brand";v="8", "Chromium";v="138", "Google Chrome";v="138"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"' \
+  --data-raw '{"user_description":"I want to open a competitor for OpenAI which provides 3 LLM subscriptions. I want to build a financial model which tests the feasibility and the overall return of this. I want to structure the model per subscription model, and want to have the model for 5 years straight, starting from 2026 January. I want to operate in both India, Dubai and London","total_user":["UK_Europe_High_Income_Individual_User_Base","UK_Europe_Mid_Income_Individual_User_Base","UK_Europe_Low_Income_Individual_User_Base","UK_Europe_High_Income_Enterprise_User_Base","UK_Europe_Mid_Income_Enterprise_User_Base","UK_Europe_Low_Income_Enterprise_User_Base","Middle_East_Africa_High_Income_Individual_User_Base","Middle_East_Africa_Mid_Income_Individual_User_Base","Middle_East_Africa_Low_Income_Individual_User_Base","Middle_East_Africa_High_Income_Enterprise_User_Base","Middle_East_Africa_Mid_Income_Enterprise_User_Base","Middle_East_Africa_Low_Income_Enterprise_User_Base","Indian_Subcontinent_High_Income_Individual_User_Base","Indian_Subcontinent_Mid_Income_Individual_User_Base","Indian_Subcontinent_Low_Income_Individual_User_Base","Indian_Subcontinent_High_Income_Enterprise_User_Base","Indian_Subcontinent_Mid_Income_Enterprise_User_Base","Indian_Subcontinent_Low_Income_Enterprise_User_Base"],"revenue_sources_splits":["Basic (%)","Standard (%)","Exclusive (%)"],"currency":"usd","interval":"halfyearly","product_revenue":"LLM_Subscription_Revenue","total_revenue":"Total_Revenue"}'
+
+
+
 curl --location 'http://127.0.0.1:8000/estimate_user_base_assumption_values' \
 --header 'Accept: application/json, text/plain, */*' \
 --header 'Accept-Language: en-US,en;q=0.9' \
