@@ -1,3 +1,34 @@
+I am seeking a detailed and investor-ready 5-year financial model to evaluate the feasibility, scalability, and return on investment (ROI) of launching an AI company positioned as a competitor to OpenAI.
+
+#Business Overview
+The company will offer four distinct subscription tiers for Large Language Model (LLM) services.
+
+#Operations will span three strategic markets:
+India
+United Arab Emirates (Dubai)
+United Kingdom (London)
+
+#Financial Model Requirements
+
+The model should include:
+
+##Three Financial Statement Projections
+Estimation of the quantity of expected users for each subscription tier
+Revenue and Cost estimations for each subscription tier
+Profit and Loss Statement, Balance Sheet and Cashflow Statement
+
+##Key Financial Metrics
+Capital Expenditure Requirements and Depreciation, including infrastructure and IT
+Subscription pricing strategy, including regional pricing variations
+Headcount and talent acquisition expenses
+Per unit cost optimization
+EBITDA, EBIT, Net Income and their respective margins
+Return on Assets and Equity
+
+##Investment & Return Analysis
+Projected debt and equity financing to achieve sustainable operations across all three markets
+Cumulative Cashflow Analysis and Break-even analysis
+Internal Rate of Return (IRR) and Net Present Value (NPV)
 curl 'https://www.py.pitchfit.ai/modeling/estimate_cf_pl_bs_df' \
   -H 'Accept: application/json, text/plain, */*' \
   -H 'Accept-Language: en-US,en;q=0.9' \
