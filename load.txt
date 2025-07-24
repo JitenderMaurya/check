@@ -1,115 +1,17 @@
-curl --location 'https://www.py.pitchfit.ai/modeling/get_output' \
---header 'Accept: application/json, text/plain, */*' \
---header 'Accept-Language: en-US,en;q=0.9' \
---header 'Connection: keep-alive' \
---header 'Content-Type: application/json' \
---header 'Origin: http://localhost:5173' \
---header 'Referer: http://localhost:5173/' \
---header 'Sec-Fetch-Dest: empty' \
---header 'Sec-Fetch-Mode: cors' \
---header 'Sec-Fetch-Site: cross-site' \
---header 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36' \
---header 'sec-ch-ua: "Not)A;Brand";v="8", "Chromium";v="138", "Google Chrome";v="138"' \
---header 'sec-ch-ua-mobile: ?0' \
---header 'sec-ch-ua-platform: "Windows"' \
---data '{
-    "interval": "yearly",
-    "analysis_time_frame": [
-        "2025"
-    ],
-    "weighted_average_cost_of_capital": 12,
-    "ebit": {
-        "2025": -1373027859913
-    },
-    "ebit_multiplier": 8,
-    "debt_issuance": {
-        "2025": 203303172449715500
-    },
-    "operating_cashflow": {
-        "2025": -1297399590193.116
-    },
-    "investing_cashflow": {
-        "2025": -43856211690
-    },
-    "financing_cashflow": {
-        "2025": 1341255826916
-    },
-    "total_user": {
-        "2025": 83429638.56
-    },
-    "revenue": {
-        "2025": 14055843908
-    },
-    "total_staff": {
-        "2025": 16685927.72
-    },
-    "personel_cost": {
-        "2025": 1279147816464
-    },
-    "cost": {
-        "2025": 1387083698617
-    },
-    "ebit_margin": {
-        "2025": -9768.38
-    },
-    "net_income": {
-        "2025": -20331690272831460
-    },
-    "net_income_margin": {
-        "2025": -144649374.35
-    },
-    "total_assets": {
-        "2025": 114334883962.37402
-    },
-    "current_assets": {
-        "2025": 69775885280.97403
-    },
-    "current_liabilities": {
-        "2025": 41893627836.670006
-    },
-    "account_receivables": {
-        "2025": 421675317.24
-    },
-    "account_payables": {
-        "2025": 41612510958.51
-    },
-    "inventory": {
-        "2025": 41612510958.51
-    },
-    "equity": {
-        "2025": -20331696066204550
-    },
-    "debt": {
-        "2025": 20331658500748430
-    },
-    "net_interest_expense": {
-        "2025": -20330317244971548
-    },
-    "required_financial_metrics": [
-        "Net Present Value of Free Cashflow",
-        "Net Present Value of Full Cashflow",
-        "Equity IRR (EIRR)"
-    ],
-    "required_corporate_kpi": [
-        "Total Users",
-        "Total Revenue",
-        "Total Costs",
-        "EBIT",
-        "EBIT Margin",
-        "Net Income",
-        "Net Income Margin",
-        "Total Staff",
-        "Labour cost as a share of cost",
-        "Working capital ratio",
-        "Quick ratio",
-        "Debt to equity ratio",
-        "Debt to assets ratio",
-        "Return on equity",
-        "Days Sales Outstanding",
-        "Days Payables Outstanding",
-        "Cumulative Free Cashflow",
-        "Interest coverage ratio",
-        "Operating cashflow to sales ratio",
-        "Cashflow to debt ratio"
-    ]
-}'
+curl 'https://www.py.pitchfit.ai/modeling/estimate_cf_pl_bs_df' \
+  -H 'Accept: application/json, text/plain, */*' \
+  -H 'Accept-Language: en-US,en;q=0.9' \
+  -H 'Cache-Control: no-cache' \
+  -H 'Connection: keep-alive' \
+  -H 'Content-Type: application/json' \
+  -H 'Origin: https://pitchfit.ai' \
+  -H 'Pragma: no-cache' \
+  -H 'Referer: https://pitchfit.ai/' \
+  -H 'Sec-Fetch-Dest: empty' \
+  -H 'Sec-Fetch-Mode: cors' \
+  -H 'Sec-Fetch-Site: same-site' \
+  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36' \
+  -H 'sec-ch-ua: "Not)A;Brand";v="8", "Chromium";v="138", "Google Chrome";v="138"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"' \
+  --data-raw '{"revenue":{"2025":423911133,"2026":878536955},"cost":{"2025":8384052093,"2026":16388715198},"capex":{"2025":524335011,"2026":896992006},"d_and_a":{"2025":5204,"2026":6301},"analysis_time_frame":["2025","2026"],"currency":"usd","non_operational_income_share":{"2025":0.23,"2026":0.23},"non_operational_costs_share":{"2025":0.42,"2026":0.42},"sale_of_asset":{"2025":5204,"2026":2301},"trade_and_other_receivables_share":{"2025":3,"2026":3},"prepaid_expenses_share":{"2025":2,"2026":2},"inventory_share":{"2025":3,"2026":3},"long_term_receivables_share":{"2025":5,"2026":5},"trade_and_other_payables_share":{"2025":3,"2026":3},"unearned_revenue_share":{"2025":2,"2026":2},"legal_reserve_fixed_assumption":{"2025":25000,"2026":0},"revaluation_reserve_fixed_assumption":{"2025":25000,"2026":0},"employe_personel_cost":{"2025":7877209324,"2026":15352149143},"impairment_share":{"2025":0.01,"2026":0.01},"market_interest_rates":{"2025":10,"2026":10},"debt_payback_period":1,"minimum_desired_cash":25000,"opening_cash_balance":0,"equity_sale":{"2025":0,"2026":43322},"tax_rate_assumption":12,"interval":"yearly","dividend":0,"dividend_share":10}'
