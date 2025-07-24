@@ -1,17 +1,115 @@
-curl 'https://www.py.pitchfit.ai/modeling/estimate_capex_assumption_values' \
-  -H 'Accept: application/json, text/plain, */*' \
-  -H 'Accept-Language: en-US,en;q=0.9' \
-  -H 'Cache-Control: no-cache' \
-  -H 'Connection: keep-alive' \
-  -H 'Content-Type: application/json' \
-  -H 'Origin: https://pitchfit.ai' \
-  -H 'Pragma: no-cache' \
-  -H 'Referer: https://pitchfit.ai/' \
-  -H 'Sec-Fetch-Dest: empty' \
-  -H 'Sec-Fetch-Mode: cors' \
-  -H 'Sec-Fetch-Site: same-site' \
-  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36' \
-  -H 'sec-ch-ua: "Not)A;Brand";v="8", "Chromium";v="138", "Google Chrome";v="138"' \
-  -H 'sec-ch-ua-mobile: ?0' \
-  -H 'sec-ch-ua-platform: "macOS"' \
-  --data-raw '{"formula":{"Step 1: Estimate the cost required to set-up the product/service industry":["GPU_Infrastructure_Cost (USD) = GPU_Servers_increase_this_year * GPUs_per_Server * Cost_per_GPU + GPU_Servers_last_year * GPUs_per_Server * Cost_per_GPU * Replacement_for_Older_Infrastructure_share / 100","Server_Hardware_Cost (USD) = GPU_Servers_increase_this_year * Server_Infrastructure_Cost_per_Server + GPU_Servers_last_year * Server_Infrastructure_Cost_per_Server * Replacement_for_Older_Infrastructure_share / 100","Networking_Infrastructure_Cost (USD) = GPU_Servers_increase_this_year * Networking_Equipment_Cost_per_Server + GPU_Servers_last_year * Networking_Equipment_Cost_per_Server * Replacement_for_Older_Infrastructure_share / 100","Cooling_Infrastructure_Cost (USD) = GPU_Servers_increase_this_year * Cooling_System_Cost_per_Server + GPU_Servers_last_year * Cooling_System_Cost_per_Server * Replacement_for_Older_Infrastructure_share / 100","Power_Infrastructure_Cost (USD) = GPU_Servers_increase_this_year * Power_Infrastructure_Cost_per_Server + GPU_Servers_last_year * Power_Infrastructure_Cost_per_Server * Replacement_for_Older_Infrastructure_share / 100","Data_Center_Setup_Cost (USD) = Number_of_Locations * Data_Center_Setup_Cost_per_Location","Software_Infrastructure_Cost (USD) = GPU_Servers_increase_this_year * Software_Licensing_Cost_per_Server + GPU_Servers_last_year * Software_Licensing_Cost_per_Server * Replacement_for_Older_Infrastructure_share / 100","Security_Infrastructure_Cost (USD) = Number_of_Locations * Security_Infrastructure_Cost_per_Location","LLM_Infrastructure_Setup_Costs (USD) = GPU_Infrastructure_Cost + Server_Hardware_Cost + Networking_Infrastructure_Cost + Cooling_Infrastructure_Cost + Power_Infrastructure_Cost + Data_Center_Setup_Cost + Software_Infrastructure_Cost + Security_Infrastructure_Cost"],"Step 2: Estimate the cost required to set-up systems for operations":["API_Analytics_Infrastructure_Cost (USD) = API_Analytics_Dashboard_Systems * Cost_per_API_Analytics_Dashboard","User_Management_Infrastructure_Cost (USD) = User_Management_Systems * Cost_per_User_Management_System","Billing_Infrastructure_Cost (USD) = Billing_and_Payment_Systems * Cost_per_Billing_System","Subscription_Management_Infrastructure_Cost (USD) = Subscription_Management_Systems * Cost_per_Subscription_Management_System","Customer_Support_Infrastructure_Cost (USD) = Customer_Support_Platform_Systems * Cost_per_Customer_Support_Platform","Monitoring_Infrastructure_Cost (USD) = Monitoring_and_Logging_Systems * Cost_per_Monitoring_System","Load_Balancing_Infrastructure_Cost (USD) = Load_Balancing_Systems * Cost_per_Load_Balancing_System","Database_Infrastructure_Cost (USD) = Database_Management_Systems * Cost_per_Database_Management_System","Backup_Infrastructure_Cost (USD) = Backup_and_Recovery_Systems * Cost_per_Backup_Recovery_System","Digital_IT_Systems_Setup_Costs (USD) = API_Analytics_Infrastructure_Cost + User_Management_Infrastructure_Cost + Billing_Infrastructure_Cost + Subscription_Management_Infrastructure_Cost + Customer_Support_Infrastructure_Cost + Monitoring_Infrastructure_Cost + Load_Balancing_Infrastructure_Cost + Database_Infrastructure_Cost + Backup_Infrastructure_Cost"],"Step 3: Estimate the capEx to set-up the office furniture and networking infrastructure":["Office_Furniture_Cost (USD) = Office_Locations * Office_Space_per_Location * Office_Furniture_Cost_per_sqft + Office_Locations * Conference_Rooms_per_Location * Conference_Room_Setup_Cost + Office_Locations * Workstations_per_Location * Workstation_Setup_Cost + Office_Locations * Reception_and_Common_Area_Cost_per_Location","Office_Networking_Infrastructure_Cost (USD) = Office_Locations * Office_Networking_Equipment_per_Location + Office_Locations * WiFi_Infrastructure_per_Location + Office_Locations * Phone_System_per_Location + Office_Locations * Office_Security_System_per_Location + Office_Locations * Backup_Internet_Connection_per_Location","Office_Setup_and_Infrastructure_Costs (USD) = Office_Furniture_Cost + Office_Networking_Infrastructure_Cost"],"Step 4: Estimate the capex for IT-staff":["Total_IT_Staff_Cost (USD) = Current_period_increase_in_staff * Laptop_License_and_Phones_Budget_per_staff + Previous_period_total_staff * Laptop_License_and_Phones_Budget_per_staff * Older_staff_replacement_share / 100"],"Step 5: Total capex by company":["Other_Capex (USD) = Total_Revenue * other_capex_Share / 100","Total_Capex (USD) = LLM_Infrastructure_Setup_Costs + Digital_IT_Systems_Setup_Costs + Office_Setup_and_Infrastructure_Costs + Total_IT_Staff_Cost + Other_Capex"]},"assumptions":{"GPU_Servers_last_year (#)":150,"GPU_Servers_increase_this_year (#)":75,"GPUs_per_Server (#)":8,"Cost_per_GPU (USD)":15000,"Server_Infrastructure_Cost_per_Server (USD)":25000,"Networking_Equipment_Cost_per_Server (USD)":5000,"Cooling_System_Cost_per_Server (USD)":8000,"Power_Infrastructure_Cost_per_Server (USD)":12000,"Data_Center_Setup_Cost_per_Location (USD)":2000000,"Number_of_Locations (#)":3,"Software_Licensing_Cost_per_Server (USD)":18000,"Security_Infrastructure_Cost_per_Location (USD)":500000,"Replacement_for_Older_Infrastructure_share (%)":10,"API_Analytics_Dashboard_Systems (#)":3,"Cost_per_API_Analytics_Dashboard (USD)":150000,"User_Management_Systems (#)":3,"Cost_per_User_Management_System (USD)":200000,"Billing_and_Payment_Systems (#)":3,"Cost_per_Billing_System (USD)":180000,"Subscription_Management_Systems (#)":3,"Cost_per_Subscription_Management_System (USD)":120000,"Customer_Support_Platform_Systems (#)":3,"Cost_per_Customer_Support_Platform (USD)":100000,"Monitoring_and_Logging_Systems (#)":6,"Cost_per_Monitoring_System (USD)":80000,"Load_Balancing_Systems (#)":6,"Cost_per_Load_Balancing_System (USD)":60000,"Database_Management_Systems (#)":3,"Cost_per_Database_Management_System (USD)":250000,"Backup_and_Recovery_Systems (#)":3,"Cost_per_Backup_Recovery_System (USD)":140000,"Office_Locations (#)":3,"Office_Space_per_Location (sqft)":15000,"Office_Furniture_Cost_per_sqft (USD)":120,"Conference_Rooms_per_Location (#)":8,"Conference_Room_Setup_Cost (USD)":25000,"Workstations_per_Location (#)":150,"Workstation_Setup_Cost (USD)":2500,"Reception_and_Common_Area_Cost_per_Location (USD)":80000,"Office_Networking_Equipment_per_Location (USD)":45000,"WiFi_Infrastructure_per_Location (USD)":15000,"Phone_System_per_Location (USD)":12000,"Office_Security_System_per_Location (USD)":35000,"Backup_Internet_Connection_per_Location (USD)":8000,"Laptop_License_and_Phones_Budget_per_staff (USD)":3500,"Older_staff_replacement_share (%)":10,"other_capex_Share (%)":0.1},"analysis_time_frame":["2025","2026"],"period_ranges":[["january","December",2025],["January","december",2026]],"user_description":"I want to open a competitor for OpenAI which provides 3 LLM subscriptions. I want to build a financial model which tests the feasibility and the overall return of this. I want to structure the model per subscription model, and want to have the model for 5 years straight, starting from 2026 January. I want to operate in both India, Dubai and London","currency":"usd"}'
+curl --location 'https://www.py.pitchfit.ai/modeling/get_output' \
+--header 'Accept: application/json, text/plain, */*' \
+--header 'Accept-Language: en-US,en;q=0.9' \
+--header 'Connection: keep-alive' \
+--header 'Content-Type: application/json' \
+--header 'Origin: http://localhost:5173' \
+--header 'Referer: http://localhost:5173/' \
+--header 'Sec-Fetch-Dest: empty' \
+--header 'Sec-Fetch-Mode: cors' \
+--header 'Sec-Fetch-Site: cross-site' \
+--header 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36' \
+--header 'sec-ch-ua: "Not)A;Brand";v="8", "Chromium";v="138", "Google Chrome";v="138"' \
+--header 'sec-ch-ua-mobile: ?0' \
+--header 'sec-ch-ua-platform: "Windows"' \
+--data '{
+    "interval": "yearly",
+    "analysis_time_frame": [
+        "2025"
+    ],
+    "weighted_average_cost_of_capital": 12,
+    "ebit": {
+        "2025": -1373027859913
+    },
+    "ebit_multiplier": 8,
+    "debt_issuance": {
+        "2025": 203303172449715500
+    },
+    "operating_cashflow": {
+        "2025": -1297399590193.116
+    },
+    "investing_cashflow": {
+        "2025": -43856211690
+    },
+    "financing_cashflow": {
+        "2025": 1341255826916
+    },
+    "total_user": {
+        "2025": 83429638.56
+    },
+    "revenue": {
+        "2025": 14055843908
+    },
+    "total_staff": {
+        "2025": 16685927.72
+    },
+    "personel_cost": {
+        "2025": 1279147816464
+    },
+    "cost": {
+        "2025": 1387083698617
+    },
+    "ebit_margin": {
+        "2025": -9768.38
+    },
+    "net_income": {
+        "2025": -20331690272831460
+    },
+    "net_income_margin": {
+        "2025": -144649374.35
+    },
+    "total_assets": {
+        "2025": 114334883962.37402
+    },
+    "current_assets": {
+        "2025": 69775885280.97403
+    },
+    "current_liabilities": {
+        "2025": 41893627836.670006
+    },
+    "account_receivables": {
+        "2025": 421675317.24
+    },
+    "account_payables": {
+        "2025": 41612510958.51
+    },
+    "inventory": {
+        "2025": 41612510958.51
+    },
+    "equity": {
+        "2025": -20331696066204550
+    },
+    "debt": {
+        "2025": 20331658500748430
+    },
+    "net_interest_expense": {
+        "2025": -20330317244971548
+    },
+    "required_financial_metrics": [
+        "Net Present Value of Free Cashflow",
+        "Net Present Value of Full Cashflow",
+        "Equity IRR (EIRR)"
+    ],
+    "required_corporate_kpi": [
+        "Total Users",
+        "Total Revenue",
+        "Total Costs",
+        "EBIT",
+        "EBIT Margin",
+        "Net Income",
+        "Net Income Margin",
+        "Total Staff",
+        "Labour cost as a share of cost",
+        "Working capital ratio",
+        "Quick ratio",
+        "Debt to equity ratio",
+        "Debt to assets ratio",
+        "Return on equity",
+        "Days Sales Outstanding",
+        "Days Payables Outstanding",
+        "Cumulative Free Cashflow",
+        "Interest coverage ratio",
+        "Operating cashflow to sales ratio",
+        "Cashflow to debt ratio"
+    ]
+}'
