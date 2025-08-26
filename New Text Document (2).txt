@@ -1,3 +1,6 @@
+https://meeting.samsung.net/@/enter?conferenceNo=10419287&email=jkmaurya161@gmail.com&userType=O&usePassword=false&lang=en
+
+
 "What are the most critical challenges this team is trying to solve in the next 6–12 months?"
 "what are the immediate priorities for someone starting in this position?
 
@@ -204,3 +207,4 @@ I would like to confirm my understanding regarding the additional request relate
 As I understand, during the visualization of score maps—particularly for pothole detection on the Indian dataset—I should identify Indian samples where the score map fails to accurately detect pothole damage. Based on this, I should then select visually similar Indian images from the training set using image similarity techniques. Gradually, I will introduce pixel-level pothole annotations for these selected samples and observe the resulting improvements in detection accuracy on the Indian dataset.
 
 Please let me know if this understanding is correct or if any clarification is neede
+
