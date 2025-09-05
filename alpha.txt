@@ -419,3 +419,139 @@ curl --location 'https://www.py.pitchfit.ai/modeling/estimate_user_base_assumpti
     ],
     "user_description": "I want to open a competitor for OpenAI which provides 4 LLM subscriptions. I want to build a financial model which tests the feasibility and the overall return of this. i want to structure the model per subscription model, and want to have the model for 5 years straight, starting from 2026 January. I want to operate in both India, Dubai and London"
 }'
+
+
+{
+    "session_id": "68b9f18552195c593d04a5e2",
+    "formula": {
+        "Step 1: Identify user across different product/services": [
+            "Total_basic_users (#) = (UK_Market - UK_Churn + UAE_Market - UAE_Churn + India_Market - India_Churn) * basic / 100",
+            "Total_standard_users (#) = (UK_Market - UK_Churn + UAE_Market - UAE_Churn + India_Market - India_Churn) * standard / 100",
+            "Total_exclusive_users (#) = (UK_Market - UK_Churn + UAE_Market - UAE_Churn + India_Market - India_Churn) * exclusive / 100"
+        ],
+        "Step 2: Breakdown the user base by plan tenure": [
+            "Total_basic_quarterly_billing (#) = Total_basic_users * basic_quarterly_share * quarterly_effective_rate / 10000",
+            "Total_standard_halfyearly_billing (#) = Total_standard_users * standard_halfyearly_share * halfyearly_effective_rate / 10000",
+            "Total_standard_yearly_billing (#) = Total_standard_users * standard_yearly_share * yearly_effective_rate / 10000",
+            "Total_exclusive_yearly_billing (#) = Total_exclusive_users * exclusive_yearly_share * yearly_effective_rate / 10000"
+        ],
+        "Step 3: Identify the pricing rate for each product/services": [
+            "Basic_quarterly_discounted_price (USD) = (basic_quarterly_price * (12 - basic_quarterly_discounts_period) + basic_quarterly_price * basic_quarterly_discounts_period * (100 - basic_quarterly_discounts) / 100) / 12",
+            "Standard_halfyearly_discounted_price (USD) = (standard_halfyearly_price * (12 - standard_halfyearly_discounts_period) + standard_halfyearly_price * standard_halfyearly_discounts_period * (100 - standard_halfyearly_discounts) / 100) / 12",
+            "Standard_yearly_discounted_price (USD) = (standard_yearly_price * (12 - standard_yearly_discounts_period) + standard_yearly_price * standard_yearly_discounts_period * (100 - standard_yearly_discounts) / 100) / 12",
+            "Exclusive_yearly_discounted_price (USD) = (exclusive_yearly_price * (12 - exclusive_yearly_discounts_period) + exclusive_yearly_price * exclusive_yearly_discounts_period * (100 - exclusive_yearly_discounts) / 100) / 12"
+        ],
+        "Step 4: Revenue computation for each product line": [
+            "Basic_subscription_revenue (USD) = Total_basic_quarterly_billing * Basic_quarterly_discounted_price * quarterly_billing_cycles_per_year",
+            "Standard_subscription_revenue (USD) = Total_standard_halfyearly_billing * Standard_halfyearly_discounted_price * halfyearly_billing_cycles_per_year + Total_standard_yearly_billing * Standard_yearly_discounted_price * yearly_billing_cycles_per_year",
+            "Exclusive_subscription_revenue (USD) = Total_exclusive_yearly_billing * Exclusive_yearly_discounted_price * yearly_billing_cycles_per_year"
+        ],
+        "Step 5: Total revenue computation": [
+            "Total_subscription_revenue (USD) = Basic_subscription_revenue + Standard_subscription_revenue + Exclusive_subscription_revenue",
+            "Additional_revenue (USD) = Total_subscription_revenue * additional_revenue_contribution / 100",
+            "Total_revenue (USD) = Total_subscription_revenue + Additional_revenue"
+        ]
+    },
+    "assumption_values": {
+        "2025": [
+            "",
+            30,
+            10,
+            60,
+            "",
+            95,
+            93,
+            35,
+            100,
+            65,
+            97,
+            100,
+            "",
+            32,
+            92,
+            27,
+            2,
+            165,
+            31,
+            315,
+            1,
+            2,
+            3,
+            17,
+            22,
+            "",
+            4,
+            1,
+            2,
+            "",
+            0
+        ]
+    },
+    "units": [
+        "",
+        "%",
+        "%",
+        "%",
+        "",
+        "%",
+        "%",
+        "%",
+        "%",
+        "%",
+        "%",
+        "%",
+        "",
+        "%",
+        "usd",
+        "%",
+        "month",
+        "usd",
+        "usd",
+        "usd",
+        "month",
+        "month",
+        "month",
+        "%",
+        "%",
+        "",
+        "#",
+        "#",
+        "#",
+        "",
+        "%"
+    ],
+    "currency": "USD",
+    "steps": [
+        "Step 1: Identify user across different product/services",
+        "standard",
+        "exclusive",
+        "basic",
+        "Step 2: Breakdown the user base by plan tenure",
+        "halfyearly_effective_rate",
+        "quarterly_effective_rate",
+        "standard_yearly_share",
+        "basic_quarterly_share",
+        "standard_halfyearly_share",
+        "yearly_effective_rate",
+        "exclusive_yearly_share",
+        "Step 3: Identify the pricing rate for each product/services",
+        "exclusive_yearly_discounts",
+        "standard_halfyearly_price",
+        "standard_yearly_discounts",
+        "basic_quarterly_discounts_period",
+        "standard_yearly_price",
+        "basic_quarterly_price",
+        "exclusive_yearly_price",
+        "standard_halfyearly_discounts_period",
+        "exclusive_yearly_discounts_period",
+        "standard_yearly_discounts_period",
+        "standard_halfyearly_discounts",
+        "basic_quarterly_discounts",
+        "Step 4: Revenue computation for each product line",
+        "quarterly_billing_cycles_per_year",
+        "yearly_billing_cycles_per_year",
+        "halfyearly_billing_cycles_per_year",
+        "Step 5: Total revenue computation",
+        "additional_revenue_contribution"
+    ]
+}
