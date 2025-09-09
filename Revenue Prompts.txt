@@ -1,0 +1,519 @@
+REVENUE STEPS
+####################STEP 1 PROMPT############################
+
+    prompt = f"""You are successful investment banker, expert in Financial modeling and revenue calculation.
+    The company offers multiple services/products: {Revenue_sources_splits}, and its total user base is provided as {Total_user}.
+    Each product/service is mapped to a portion of this user base based on the defined splits, including any cross-selling behavior, as described in: {Revenue_sources_splits_with_cross_selling}.
+    
+    we will be writing 5 step process to compute revenue for a company. Your task is to write **Step 1**, which estimates the total number of users associated with each product/service using the full user base and the provided split assumptions.
+    you have to follow this directions for **Step 1** of User Estimation Framework to write formula.
+    
+    ## Step 1 Objective:
+    Step 1: In this step, we **estimate the number of users per product/service**. This step defines the demand requirement per product/service using user base splits and cross-sell patterns.
+    Assumptions input is provided in {Revenue_sources_splits_with_cross_selling}, you have to use this keys eactly in writing formula and use this exactly in the assumptions.
+    
+    ## Instructions:
+    - Respond in JSON format
+    - When writing the step-by-step formula, please represent numbers without commas (e.g., use 1000000 instead of 1,000,000).
+    - Use actual full numeric values (e.g., 1000000 instead of 1 (million), or 1000 instead of 1 (thousand)).
+    - Don't use year or month name in assigning any key names in formula 
+    - Make sure that the step names do not use keywords such as numeric year(eg: 2025, 2026 etc), "monthly", "explore", "calculate" or "apply."
+    - Make sure that the formula should be designed to compute for the entire period specified in one go, rather than breaking it into separate subperiods.
+    - Includes clear intermediate steps for calculating key values
+    - Follow the example output format provided below
+    - dont include "[]" bracket in formula, if required use "()" bracket
+    - Don't include Total_user parameters in assumptions only include "Revenue_sources_splits_with_cross_selling" parameters in assumptions.
+    - Make sure to provide all assumptions and formula calculations using full numeric values (e.g., 1000000 instead of 1 million). Avoid any abstract or shorthand representations.
+    - If user base across various product/services is provided use it, as it is.
+    - Each formula must be accompanied by a **well-defined unit** on the left-hand side (e.g., "Total_user (#)").
+    - Use clean, mathematical expressions. No narrative commentary.
+    
+    ## Output Format:
+    Respond strictly in JSON format.
+
+    ### Example:
+        {{ "assumptions":{{
+            "Product_A_share (%)" = 66,
+            "product_B_share (%)" = 24,
+            "Product_A_and_Product_B_share (%)" = 10,                  
+        }}
+        "formula": {{
+            "Step 1: Identify user across different product/services":[" Total_user_A (#) = User_A * Product_A_share + User_A * Product_A_and_Product_B_share",
+                "Total_user_B (#) = User_B * Product_B_share + User_B * Product_A_and_Product_B_share"]
+        }}
+    }}
+    Let's think step-by-step. Do not solve or simplify the equations. Output only the assumptions and the formula.
+    """
+
+
+################STEP 2 PROMPTS##################################################
+
+    prompt = f"""you are a successful investment banker with deep expertise in financial modeling and revenue computation. Your task is to break down the company s user base across different plan tenures such as monthly, quarterly, half-yearly, and yearly subscriptions based on realistic business assumptions.
+    If such breakdown is not feasible (due to product/service nature or if interval is monthly), then all users should be for only {interval} period as a single tenure plan.
+    You will be provided with user requirement as {user_description} and period = {interval}. 
+    Also, You will be provided with step 1 as {step1}. Step 1 computed user across various product/services offered.
+    Company's user base is split across various services/product i.e {Revenue_sources_splits} is offered by it.
+    You will be provided with user base consituents as {Total_user}.
+    Write detailed step by step formula to compute user base considering billing cycle of each product/servie if applicable.
+    We want compute user base for {interval} period only and billing cycle for each product is according to billing description provided as {billing}. The billing key name of each product based on time cycle is given as [{price_key}]. Use this name as it is in formula & include this keys in **assumptions** as it is with realistic value consideration.
+    
+    ## Step 2 Objective:
+    We are writing 5 step process to compute revenue for a company. Your task is to write **Step 2: Breakdown of User Base by Plan Tenure** given first step. 
+    In this second step we breakdown the user base by plan tenure.   
+    you have to follow this directions for **Step 2** of User-Base breakdown Framework to write formula.
+    Step 2: In this step, breakdown the user base by plan tenure.
+    You need to think and decide which product/services can have different plans/subscription based on realistic assumptions.
+    In this step you have to write formula to breakdown user base for {interval} period.  
+    For example, if you are breaking for yearly period and the subscription can have maximum 4 plans: monthly, quarterly, halfyearly, and yearly, then the expectation is to breakdown the user base by each
+    For example, if you are breaking for halfyearly period and the subscription can have maximum 3 plans: monthly, quarterly and halfyearly, then the expectation is to breakdown the user base by each
+    For example, if you are breaking for quarterly period and the subscription can have maximum 2 plans: monthly and quarterly, then the expectation is to breakdown the user base by each
+    For example, if you are breaking for monthly period and the subscription can have maximum 1 plans: monthly, then the expectation is to breakdown the user base by only monthly
+    if it is not realistic to breakdown user base for product/service, then consider only whole {interval} period
+    
+    ## Instructions:
+    - Final "assumptions" must include both Step 1 and Step 2 assumptions.
+    - Response must be in **valid JSON format**.
+    - All values should use full numeric representation (e.g., 1000000 not 1 million or 1M), and no commas in numbers. Avoid any abstract or shorthand representations.
+    - Do not use year keywords (e.g., 2025), or terms like "explore", "calculate", or "apply" in step names or formulas.
+    - Includes clear intermediate steps for calculating key values.
+    - Ensure that the formula is designed for the entire {interval} period and not split across sub-periods.
+    - Make sure all keys used in assumptions match exactly with those used in formulas.
+    - dont include "[]" bracket in formula, if required use "()" bracket
+    - Each formula must be accompanied by a **well-defined unit** on the left-hand side (e.g., "Total_user (#)").
+    - If user base is computed for only monthly period then user across each service belongs to monthly period only.
+    
+    ## Example Output format (for yearly period):
+        {{ "assumptions":{{
+            "Product_A_share (%)" = 66,
+            "product_B_share (%)" = 24,
+            "Product_A_and_Product_B_share (%)" = 10,
+            "User_A_monthly_share (%)" = 40,
+            "User_A_quarterly_share (%)" = 30,
+            "User_A_halfyearly_share (%)" = 20,
+            "User_A_yearly_share (%)" = 10,
+            "User_B_monthly_share (%)" = 42,
+            "User_B_quarterly_share (%)" = 31,
+            "User_B_halfyearly_share (%)" = 19,
+            "User_B_yearly_share (%)" = 8,
+            "monthly_effective_rate (%)" = 87,
+            "quarterly_effective_rate (%)" = 96,
+            "halfyearly_effective_rate (%)" = 95,
+            "yearly_effective_rate (%)" = 91,                  
+        }}
+        "formula": {{
+            "Step 1: Identify user across different product/services":[" Total_user_A (#) = User_A * Product_A_share + User_A * Product_A_and_Product_B_share",
+                "Total_user_B (#) = User_B * Product_B_share + User_B * Product_A_and_Product_B_share"],
+            "Step 2: Breakdown the user base by plan tenure ": ["Total_user_A_monthly_Billing (#) = Total_user_A * User_A_monthly_share * monthly_effective_rate",
+                "Total_user_A_quarterly_Billing (#) = Total_user_A * User_A_quarterly_share * quarterly_effective_rate",
+                "Total_user_A_halfyearly_Billing (#) = Total_user_A * User_A_halfyearly_share * halfyearly_effective_rate",
+                "Total_user_A_yearly_Billing (#) = Total_user_A * User_A_yearly_share * yearly_effective_rate",                         
+                "Total_user_B_monthly_Billing (#) = Total_user_B * User_B_monthly_share * monthly_effective_rate",
+                "Total_user_B_quarterly_Billing (#) = Total_user_B * User_B_quarterly_share * quarterly_effective_rate",
+                "Total_user_B_halfyearly_Billing (#) = Total_user_B * User_B_halfyearly_share * halfyearly_effective_rate",
+                "Total_user_B_yearly_Billing (#) = Total_user_B * User_B_yearly_share * yearly_effective_rate"]
+        }}
+    }}
+    
+    Example Output formula for monthly period:
+        {{ "assumptions":{{
+            "Product_A_share (%)" = 66,
+            "product_B_share (%)" = 24,
+            "Product_A_and_Product_B_share (%)" = 10,
+            "effective_rate (%)" = 96,                
+        }}
+        "formula": {{
+            "Step 1: Identify user across different product/services":[" Total_user_A (#)= User_A * Product_A_share + User_A * Product_A_and_Product_B_share",
+                "Total_user_B (#) = User_B * Product_B_share + User_B * Product_A_and_Product_B_share"],
+            "Step 2: Breakdown the user base by plan tenure: "["Total_user_A_monthly_Billing (#) = Total_user_A * effective_rate",
+            "Total_user_B_monthly_Billing (#) = Total_user_B * effective_rate",
+        }}
+    }}
+    Let's think step-by-step. Do not solve or simplify the formulas. Output only assumptions and formulas.
+    """
+
+
+############################STEP 3 PROMPTS##################################################
+
+    prompt = f"""you are a seasoned investment banker with deep expertise in financial modeling and revenue computation. Your task is to write formula to calculate discounted price for each product/services across different plan tenures, such as monthly, quarterly, half-yearly, and yearly subscriptions based on realistic business assumptions.
+    You will be provided with user requirement scenario descriptions as {user_description} and period : {interval}. 
+    Also, You will be provided with step 1 and step 2 as {step2}. Step 1 computed user across various product/services offered and step 2 computed user across various tenure plans.
+    Company's user base is split across various services/product i.e {Revenue_sources_splits} is offered by it.
+    You will be provided with user base consituents as {Total_user}.
+    Write detailed step by step formula to compute discounts considering billing cycle of each product/servie if applicable.
+    Billing cycle for each product is according to billing description provided as {billing}.
+    
+    ##TASK
+    We are writing 5 step process to compute revenue for a company. Your task is to write **Step 3** given first and second step. 
+    In this third step we Identify the pricing rate for each product/servicese by plan tenure.   
+
+    you have to follow this directions for third Step to write formula
+    Step 3: In this step, Identify the pricing rate for each product/services plan offered.
+    In this step you have to write formula to Identify the pricing rate for {interval} interval period in {currency} currency.  
+    Identify the pricing rate for each product/services tenure plans offered in a duration. Typically, we factor for pricing discounts in case anyone is doing any discounting to their product/services driven by seasons.
+	Example:
+    -	If a company provides discounts for 2 months by 25%, and the original price is USD 100 and claculuation is done for yearly period
+    -	Then, the yearly_Discounted_price = [original_price * (fix_num - discount_months) + original_price * (discount_months) * (100% - discount_rate) ] / fix_num
+    - halfyearly_Discounted_price = [original_price * (fix_num - discount_months) + original_price * (discount_months) * (100% - discount_rate) ] / fix_num
+    - quarterly_Discounted_price = [original_price * (fix_num - discount_months) + original_price * (discount_months) * (100% - discount_rate) ] / fix_num
+    Where discount_months = 2 in the example above
+    Discount_rate = 25% in the example above
+    
+    Note: this above formula is for yearly period calculations.
+    If the model is for halfyearly, quarterly, monthly, etc. then the discount for each period would be applied as necessary. In other words:
+    for halfyearly period, dicounted_Price = [100 * (fix_num - discount_months) + 100 * (discount_months) * (100% - discount_rate)] / fix_num
+    for quaterly period, dicounted_Price = [100 * (fix_num - discount_months) + 100 * (discount_months) * (100% - discount_rate)] / fix_num
+    
+    if interval period is yearly, keep fix_num = 12 for monthly, quarterly, halfyearly and yearly tenure plans
+    if interval period is halfyearly, keep fix_num = 6 for monthly, quarterly and halfyearly tenure plans
+    if interval period is quarterly,keep fix_num = 3 for monthly and quarterly tenure plans
+        
+    ### Instructions
+    - Make sure to Add all **Step 3 assumptions** to the existing list of assumptions from Steps 1 and 2.
+    - Make sure to write formula to compute discounted price for each {Revenue_sources_splits} using above explanations
+    - Format the output in **valid JSON**.
+    - Don't use year name in assigning any key names in formula 
+    - Make sure that the step names do not use keywords such as numeric year(eg: 2025, 2026 etc), "explore", "calculate" or "apply."
+    - Includes clear intermediate steps for calculating key values 
+    - Follow the example output format provided below
+    - dont include "[]" bracket in formula, if required use "()" bracket
+    - Make sure to provide all assumptions and formula calculations using full numeric values (e.g., 1000000 instead of 1 million). Avoid any abstract or shorthand representations.
+    - If user base is computed for only monthly period then user across each service belongs to monthly period only.
+    - Each formula must be accompanied by a **well-defined unit** on the left-hand side (e.g., "Total_user (#)").
+    - The revenue calculation must be in {currency} currency.
+    - You can update previous steps formula but make sure to add or remove assumptions parameters accordingly
+
+    ## Example Output format(for yearly period):
+        {{ "assumptions":{{
+            "Product_A_share (%)" = 66,
+            "product_B_share (%)" = 24,
+            "Product_A_and_Product_B_share (%)" = 10,
+            "User_A_monthly_share (%)" = 40,
+            "User_A_quarterly_share (%)" = 30,
+            "User_A_halfyearly_share (%)" = 20,
+            "User_A_yearly_share (%)" = 10,
+            "User_B_monthly_share (%)" = 42,
+            "User_B_quarterly_share (%)" = 31,
+            "User_B_halfyearly_share (%)" = 19,
+            "User_B_yearly_share (%)" = 8,
+            "monthly_effective_rate (%)" = 87,
+            "quarterly_effective_rate (%)" = 96,
+            "halfyearly_effective_rate (%)" = 95,
+            "yearly_effective_rate (%)" = 91,  
+            "Product_A_monthly_price (USD)" = 5
+            "Product_A_quarterly_price (USD)" = 14
+            "Product_A_halfyearly_price (USD)" = 27
+            "Product_A_yearly_price (USD)" = 50
+            "Product_B_monthly_price (USD)" = 6
+            "Product_B_quarterly_price (USD)" = 16
+            "Product_B_halfyearly_price (USD)" = 31
+            "Product_B_yearly_price (USD)" = 60
+            "Product_A_quarterly_discounts (%)" = 10
+            "Product_A_halfyearly_discounts (%)" = 15
+            "Product_A_yearly_discounts (%)" = 25
+            "Product_B_quarterly_discounts (%)" = 12
+            "Product_B_halfyearly_discounts (%)" = 20
+            "Product_B_yearly_discounts (%)" = 30
+            "Product_A_quarterly_discounts_period (month)" = 1
+            "Product_A_halfyearly_discounts_period (month)" = 2
+            "Product_A_yearly_discounts_period (month)" = 3
+            "Product_B_quarterly_discounts_period (month)" = 1
+            "Product_B_halfyearly_discounts_period (month)" = 2
+            "Product_B_yearly_discounts_period (month)" = 4                
+        }}
+        "formula": {{
+            "Step 1: Identify user across different product/services":[" Total_user_A (#) = User_A * Product_A_share + User_A * Product_A_and_Product_B_share",
+                "Total_user_B (#) = User_B * Product_B_share + User_B * Product_A_and_Product_B_share"],
+            "Step 2: Breakdown the user base by plan tenure ": ["Total_user_A_monthly_Billing (#) = Total_user_A * User_A_monthly_share * monthly_effective_rate",
+                "Total_user_A_quarterly_Billing (#) = Total_user_A * User_A_quarterly_share * quarterly_effective_rate",
+                "Total_user_A_halfyearly_Billing (#) = Total_user_A * User_A_halfyearly_share * halfyearly_effective_rate",
+                "Total_user_A_yearly_Billing (#) = Total_user_A * User_A_yearly_share * yearly_effective_rate",                         
+                "Total_user_B_monthly_Billing (#) = Total_user_B * User_B_monthly_share * monthly_effective_rate",
+                "Total_user_B_quarterly_Billing (#) = Total_user_B * User_B_quarterly_share * quarterly_effective_rate",
+                "Total_user_B_halfyearly_Billing (#) = Total_user_B * User_B_halfyearly_share * halfyearly_effective_rate",
+                "Total_user_B_yearly_Billing (#) = Total_user_B * User_B_yearly_share * yearly_effective_rate"],
+            "Step 3 : Identify the pricing rate for each product/services": ["Product_A_quarterly_discounted_price (USD) = (Product_A_quarterly_price * (12 - Product_A_quarterly_discounts_period) + Product_A_quarterly_price * Product_A_quarterly_discounts_period * (100 - Product_A_quarterly_discounts) ] / 12",
+                "Product_A_halfyearly_discounted_price (USD) = (Product_A_halfyearly_price * (12 - Product_A_halfyearly_discounts_period) + Product_A_halfyearly_price * Product_A_halfyearly_discounts_period * (100 - Product_A_halfyearly_discounts) ] / 12",
+                "Product_A_yearly_discounted_price (USD) = (Product_A_yearly_price * (12 - Product_A_yearly_discounts_period) + Product_A_yearly_price * Product_A_yearly_discounts_period * (100 - Product_A_yearly_discounts) ] / 12",
+                "Product_B_quarterly_discounted_price (USD) = (Product_B_quarterly_price * (12 - Product_B_quarterly_discounts_period) + Product_B_quarterly_price * Product_A_quarterly_discounts_period * (100 - Product_A_quarterly_discounts) ] / 12",
+                "Product_B_halfyearly_discounted_price (USD) = (Product_B_halfyearly_price * (12 - Product_B_halfyearly_discounts_period) + Product_B_halfyearly_price * Product_A_halfyearly_discounts_period * (100 - Product_A_halfyearly_discounts) ] / 12",
+                "Product_B_yearly_discounted_price (USD) = (Product_B_yearly_price * (12 - Product_B_yearly_discounts_period) + Product_A_yearly_price * Product_A_yearly_discounts_period * (100 - Product_A_yearly_discounts) ] / 12", ]
+        }}
+    }}
+    
+    Example Output formula for monthly period:
+        {{ "assumptions":{{
+            "Product_A_share (%)" = 66,
+            "product_B_share (%)" = 24,
+            "Product_A_and_Product_B_share (%)" = 10,
+            "effective_rate (%)" = 96,  
+            "Product_A_price (USD)" = 5,
+            "Product_B_price (USD)" = 6,
+            "Product_A_discounts (%)" = 35,
+            "Product_B_discounts (%)" = 45,                        
+        }}
+        "formula": {{
+            "Step 1: Identify user across different product/services":[" Total_user_A (#) = User_A * Product_A_share + User_A * Product_A_and_Product_B_share",
+                "Total_user_B (#) = User_B * Product_B_share + User_B * Product_A_and_Product_B_share"],
+            "Step 2: Breakdown the user base by plan tenure: "["Total_user_A_monthly_Billing (#) = Total_user_A * effective_rate",
+                "Total_user_B_monthly_Billing (#) = Total_user_B * effective_rate",],
+            "Step 3: Identify the pricing rate for each product/services":["Product_A_discounted_price (USD) = (Product_A_price * (100 - Product_A_discounts) / 100",
+                "Product_B_discounted_price (USD) = (Product_B_price * (100 - Product_B_discounts) / 100"]
+        }}
+    }}
+    Let's think step-by-step. Do not solve equations, only write step-by-step formula. Keep the formula compact. Recheck to make sure consider {interval} period breakdown for formula. Keep units on left side of equations
+    """
+  
+
+######################################STEP 4 PROMPTS#################################
+
+    prompt = f"""you are a successful investment banker with deep expertise in financial modeling and revenue computation. Your task is to write formula to calculate revenue from each product/services using fromula step 2 and step 3.
+    You will be provided with user requirement as {user_description} and period = {interval}. 
+    Also, You will be provided with step 1, step 2 and step 3 as {step3}. Step 1 computed user across various product/services offered, step 2 computed user across various tenure plans and step 3 computed discounted price for each product/service for various tenure plans available.
+    Company's user base is split across various services/product i.e {Revenue_sources_splits} is offered by it.
+    You will be provided with user base consituents as {Total_user}.
+    Write detailed step by step formula to compute revenue for each product/services, considering billing cycle of each product/servie if applicable.
+    Billing cycle for each product is according to billing description provided as {billing}.
+    
+    ##TASK
+    We are writing 5 step process to compute revenue for a company. Your task is to write **Step 4** given first, second and third step. 
+    In this third step we Calculate the revenue for each product/servicese by plan tenure.   
+    you have to follow this directions for fouth Step to write formula
+    
+    Step 4: In this step, Calculate the revenue for each product/services plan offered.
+    In this step you have to write formula to Calculate the revenue for {interval} interval period in {currency} currency.  
+    Calculate the revenue for each product/services tenure plans offered in the duration. Typically, we will multiply various tenure plans users obtained in step 2 and the discounted price for each product/services tenure plans.  
+    
+    ## Requirements
+    - make sure to add step 4 assumption in step 1, step 2 and step 3 assumptions
+    - Make sure to write formula to compute revuene from each {Revenue_sources_splits} product/services offered
+    - Respond in JSON format
+    - Make sure to provide all assumptions and formula calculations using full numeric values (e.g., 1000000 instead of 1 million). Avoid any abstract or shorthand representations.
+    - Don't use year name in assigning any key names in formula 
+    - Make sure that the step names do not use keywords such as numeric year(eg: 2025, 2026 etc), "explore", "calculate" or "apply."
+    - Includes clear intermediate steps for calculating key values
+    - Follow the example output format provided below
+    - dont include "[]" bracket in formula, if required use "()" bracket
+    - If user base is computed for only monthly period then user across each service belongs to monthly period only.
+    - Each formula must be accompanied by a **well-defined unit** on the left-hand side (e.g., "Total_user (#)").
+    - The revenue calculation must be in {currency} currency.
+    - You can update previous steps formula but make sure to add or remove assumptions parameters accordingly
+
+
+    Example Output format for yearly period:
+        {{ "assumptions":{{
+            "Product_A_share (%)" = 66,
+            "product_B_share (%)" = 24,
+            "Product_A_and_Product_B_share (%)" = 10,
+            "User_A_monthly_share (%)" = 40,
+            "User_A_quarterly_share (%)" = 30,
+            "User_A_halfyearly_share (%)" = 20,
+            "User_A_yearly_share (%)" = 10,
+            "User_B_monthly_share (%)" = 42,
+            "User_B_quarterly_share (%)" = 31,
+            "User_B_halfyearly_share (%)" = 19,
+            "User_B_yearly_share (%)" = 8,
+            "monthly_effective_rate (%)" = 87,
+            "quarterly_effective_rate (%)" = 96,
+            "halfyearly_effective_rate (%)" = 95,
+            "yearly_effective_rate (%)" = 91,  
+            "Product_A_monthly_price (USD)" = 5,
+            "Product_A_quarterly_price (USD)" = 14,
+            "Product_A_halfyearly_price (USD)" = 27,
+            "Product_A_yearly_price (USD)" = 50,
+            "Product_B_monthly_price (USD)" = 6,
+            "Product_B_quarterly_price (USD)" = 16,
+            "Product_B_halfyearly_price (USD)" = 31,
+            "Product_B_yearly_price (USD)" = 60,
+            "Product_A_quarterly_discounts (%)" = 10,
+            "Product_A_halfyearly_discounts (%)" = 15,
+            "Product_A_yearly_discounts (%)" = 25,
+            "Product_B_quarterly_discounts (%)" = 12,
+            "Product_B_halfyearly_discounts (%)" = 20,
+            "Product_B_yearly_discounts (%)" = 30,
+            "Product_A_quarterly_discounts_period (month)" = 1,
+            "Product_A_halfyearly_discounts_period (month)" = 2,
+            "Product_A_yearly_discounts_period (month)" = 3,
+            "Product_B_quarterly_discounts_period (month)" = 1,
+            "Product_B_halfyearly_discounts_period (month)" = 2,
+            "Product_B_yearly_discounts_period (month)" = 4,              
+        }}
+        "formula": {{
+            "Step 1: Identify user across different product/services":[" Total_user_A (#) = User_A * Product_A_share + User_A * Product_A_and_Product_B_share",
+                "Total_user_B (#)= User_B * Product_B_share + User_B * Product_A_and_Product_B_share"],
+            "Step 2: Breakdown the user base by plan tenure ": ["Total_user_A_monthly_Billing (#)= Total_user_A * User_A_monthly_share * monthly_effective_rate",
+                "Total_user_A_quarterly_Billing (#) = Total_user_A * User_A_quarterly_share * quarterly_effective_rate",
+                "Total_user_A_halfyearly_Billing (#) = Total_user_A * User_A_halfyearly_share * halfyearly_effective_rate",
+                "Total_user_A_yearly_Billing (#) = Total_user_A * User_A_yearly_share * yearly_effective_rate",                         
+                "Total_user_B_monthly_Billing (#) = Total_user_B * User_B_monthly_share * monthly_effective_rate",
+                "Total_user_B_quarterly_Billing (#) = Total_user_B * User_B_quarterly_share * quarterly_effective_rate",
+                "Total_user_B_halfyearly_Billing (#) = Total_user_B * User_B_halfyearly_share * halfyearly_effective_rate",
+                "Total_user_B_yearly_Billing (#)= Total_user_B * User_B_yearly_share * yearly_effective_rate"],
+            "Step 3 : Identify the pricing rate for each product/services": ["Product_A_quarterly_discounted_price (USD) = (Product_A_quarterly_price * (12 - Product_A_quarterly_discounts_period) + Product_A_quarterly_price * Product_A_quarterly_discounts_period * (100 - Product_A_quarterly_discounts) ] / 12",
+                "Product_A_halfyearly_discounted_price (USD) = (Product_A_halfyearly_price * (12 - Product_A_halfyearly_discounts_period) + Product_A_halfyearly_price * Product_A_halfyearly_discounts_period * (100 - Product_A_halfyearly_discounts) ] / 12",
+                "Product_A_yearly_discounted_price (USD) = (Product_A_yearly_price * (12 - Product_A_yearly_discounts_period) + Product_A_yearly_price * Product_A_yearly_discounts_period * (100 - Product_A_yearly_discounts) ] / 12",
+                "Product_B_quarterly_discounted_price (USD) = (Product_B_quarterly_price * (12 - Product_B_quarterly_discounts_period) + Product_B_quarterly_price * Product_A_quarterly_discounts_period * (100 - Product_A_quarterly_discounts) ] / 12",
+                "Product_B_halfyearly_discounted_price (USD) = (Product_B_halfyearly_price * (12 - Product_B_halfyearly_discounts_period) + Product_B_halfyearly_price * Product_A_halfyearly_discounts_period * (100 - Product_A_halfyearly_discounts) ] / 12",
+                "Product_B_yearly_discounted_price (USD) = (Product_B_yearly_price * (12 - Product_B_yearly_discounts_period) + Product_A_yearly_price * Product_A_yearly_discounts_period * (100 - Product_A_yearly_discounts) ] / 12", ],
+            "Step 4 : Calculate the revenue for each product line" : ["Product_A_Revenue (USD) = Total_user_A_monthly_Billing * Product_A_monthly_price  + Total_user_A_quarterly_Billing  * Product_A_quarterly_discounted_price  +  Total_user_A_halfyearly_Billing * Product_A_halfyearly_discounted_price  + Total_user_A_yearly_Billing * Product_A_yearly_discounted_price" ,
+                "Product_B_Revenue (USD) = Total_user_B_monthly_Billing * Product_B_monthly_price  + Total_user_B_quarterly_Billing  * Product_B_quarterly_discounted_price  +  Total_user_B_halfyearly_Billing * Product_B_halfyearly_discounted_price  + Total_user_B_yearly_Billing * Product_B_halfyearly_discounted_price" ,]
+        }}
+    }}
+    
+    Example Output formula for monthly period:
+        {{ "assumptions":{{
+            "Product_A_share (%)" = 66,
+            "product_B_share (%)" = 24,
+            "Product_A_and_Product_B_share (%)" = 10,
+            "effective_rate (%)" = 96,  
+            "Product_A_price (USD)" = 5,
+            "Product_B_price (USD)" = 6,
+            "Product_A_discounts (%)" = 35,
+            "Product_B_discounts (%)" = 45,                        
+        }}
+        "formula": {{
+            "Step 1: Identify user across different product/services":[" Total_user_A (#) = User_A * Product_A_share + User_A * Product_A_and_Product_B_share",
+                "Total_user_B (#) = User_B * Product_B_share + User_B * Product_A_and_Product_B_share"],
+            "Step 2: Breakdown the user base by plan tenure: "["Total_user_A_monthly_Billing (#) = Total_user_A * effective_rate",
+                "Total_user_B_monthly_Billing (#) = Total_user_B * effective_rate",],
+            "Step 3: Identify the pricing rate for each product/services":["Product_A_discounted_price (USD) = (Product_A_price * (100 - Product_A_discounts) / 100",
+                "Product_B_discounted_price (USD) = (Product_B_price * (100 - Product_B_discounts) / 100"],
+            "Step 4 : Calculate the revenue for each product line" : ["Product_A_Revenue (USD) = Total_user_A_monthly_Billing * Product_A_discounted_price" ,
+                "Product_B_Revenue (USD) = Total_user_B_monthly_Billing * Product_B_discounted_price",]
+        }}
+    }}
+    Let's think step-by-step. Do not solve equations, only write step-by-step formula. Keep the compact formula. Recheck to make sure consider {interval} period breakdown for formula. Keep units on left side of equations
+    """
+
+
+#####################STEP 5 PROMPTS############################
+
+    prompt = f"""you are a successful investment banker with deep expertise in financial modeling and revenue computation. Your task is to write formula to calculate total revenue from each product/services using fromula step 4.
+    You will be provided with user requirement as {user_description} and period = {interval}. 
+    Also, You will be provided with step 1, step 2, step 3 and step 4 as {step4}. Step 1 computed user across various product/services offered, step 2 computed user across various tenure plans, step 3 computed discounted price for each product/service for various tenure plans available and step 4 computed revenue from each product/services offering.
+    Company's user base is split across various services/product i.e {Revenue_sources_splits} is offered by it.
+    You will be provided with user base consituents as {Total_user}.
+    Write detailed step by step formula to compute revenue for each product/services, considering billing cycle of each product/servie if applicable.
+    Billing cycle for each product is according to billing description provided as {billing}.
+    if there is additional revenue source information provided i.e {Additional_revenue}, include it.
+    
+    ##TASK
+    We are writing 5 step process to compute revenue for a company. Your task is to write **Step 5** given first, second, third and fourth step. 
+    In this step we Calculate the total revenue from product/services.   
+    you have to follow this directions for fifth Step to write formula
+    
+    Step 5: In this step, Calculate the total revenue from product/services plan offered.
+    In this step you have to write formula to Calculate the total revenue for {interval} interval period.  
+    Calculate the Toatl revenue from product/services offered in the duration.
+    Typically, we will add revenue obtained from each product/services obtained in step 4 and compute the additional revenue, Finally sum it to obtain total revenue for the company.  
+   
+    ## Instructions
+    - make sure to add step 5 assumption in step 1, step 2, step 3 and step 4 assumptions
+    - Make sure to write formula to compute total revenue
+    - Respond in JSON format
+    - Make sure to provide all assumptions and formula calculations using full numeric values (e.g., 1000000 instead of 1 million). Avoid any abstract or shorthand representations.
+    - Don't use year name in assigning any key names in formula 
+    - Make sure that the step names do not use keywords such as numeric year(eg: 2025, 2026 etc), "explore", "calculate" or "apply."
+    - Includes clear intermediate steps for calculating key values
+    - Follow the example output format provided below
+    - dont include "[]" bracket in formula, if required use "()" bracket
+    - If user base is computed for only monthly period then user across each service belongs to monthly period only.
+    - You can update previous steps formula but make sure to add or remove assumptions parameters accordingly
+    - Each formula must be accompanied by a **well-defined unit** on the left-hand side (e.g., "Total_user (#)").
+    - The revenue calculation must be in {currency} currency.
+    - Make sure to remove unnecessary steps from the formula which is not used any where to compute total revenue
+
+    Example Output format for yearly period:
+        {{ "assumptions":{{
+            "Product_A_share (%)" = 66,
+            "product_B_share (%)" = 24,
+            "Product_A_and_Product_B_share (%)" = 10,
+            "User_A_monthly_share (%)" = 40,
+            "User_A_quarterly_share (%)" = 30,
+            "User_A_halfyearly_share (%)" = 20,
+            "User_A_yearly_share (%)" = 10,
+            "User_B_monthly_share (%)" = 42,
+            "User_B_quarterly_share (%)" = 31,
+            "User_B_halfyearly_share (%)" = 19,
+            "User_B_yearly_share (%)" = 8,
+            "monthly_effective_rate (%)" = 87,
+            "quarterly_effective_rate (%) = 96,
+            "halfyearly_effective_rate (%)" = 95,
+            "yearly_effective_rate (%)" = 91,  
+            "Product_A_monthly_price (USD)" = 5,
+            "Product_A_quarterly_price (USD)" = 14,
+            "Product_A_halfyearly_price (USD)" = 27,
+            "Product_A_yearly_price (USD)" = 50,
+            "Product_B_monthly_price (USD)" = 6,
+            "Product_B_quarterly_price (USD)" = 16,
+            "Product_B_halfyearly_price (USD)" = 31,
+            "Product_B_yearly_price (USD)" = 60,
+            "Product_A_quarterly_discounts (%)" = 10,
+            "Product_A_halfyearly_discounts (%)" = 15,
+            "Product_A_yearly_discounts (%)" = 25,
+            "Product_B_quarterly_discounts (%)" = 12,
+            "Product_B_halfyearly_discounts (%)" = 20,
+            "Product_B_yearly_discounts (%)" = 30,
+            "Product_A_quarterly_discounts_period (month)" = 1,
+            "Product_A_halfyearly_discounts_period (month)" = 2,
+            "Product_A_yearly_discounts_period (month)" = 3,
+            "Product_B_quarterly_discounts_period (month)" = 1,
+            "Product_B_halfyearly_discounts_period (month)" = 2,
+            "Product_B_yearly_discounts_period (month)" = 4,
+            "Additional_Revenue_Contribution (%)" = 5,              
+        }}
+        "formula": {{
+            "Step 1: Identify user across different product/services":[" Total_user_A (#)= User_A * Product_A_share + User_A * Product_A_and_Product_B_share",
+                "Total_user_B (#)= User_B * Product_B_share + User_B * Product_A_and_Product_B_share"],
+            "Step 2: Breakdown the user base by plan tenure ": ["Total_user_A_monthly_Billing (#) = Total_user_A * User_A_monthly_share * monthly_effective_rate",
+                "Total_user_A_quarterly_Billing (#) = Total_user_A * User_A_quarterly_share * quarterly_effective_rate",
+                "Total_user_A_halfyearly_Billing (#) = Total_user_A * User_A_halfyearly_share * halfyearly_effective_rate",
+                "Total_user_A_yearly_Billing (#) = Total_user_A * User_A_yearly_share * yearly_effective_rate",                         
+                "Total_user_B_monthly_Billing (#) = Total_user_B * User_B_monthly_share * monthly_effective_rate",
+                "Total_user_B_quarterly_Billing (#) = Total_user_B * User_B_quarterly_share * quarterly_effective_rate",
+                "Total_user_B_halfyearly_Billing (#) = Total_user_B * User_B_halfyearly_share * halfyearly_effective_rate",
+                "Total_user_B_yearly_Billing (#) = Total_user_B * User_B_yearly_share * yearly_effective_rate"],
+            "Step 3 : Identify the pricing rate for each product/services": ["Product_A_quarterly_discounted_price (USD) = (Product_A_quarterly_price * (12 - Product_A_quarterly_discounts_period) + Product_A_quarterly_price * Product_A_quarterly_discounts_period * (100 - Product_A_quarterly_discounts) ] / 12",
+                "Product_A_halfyearly_discounted_price (USD) = (Product_A_halfyearly_price * (12 - Product_A_halfyearly_discounts_period) + Product_A_halfyearly_price * Product_A_halfyearly_discounts_period * (100 - Product_A_halfyearly_discounts) ] / 12",
+                "Product_A_yearly_discounted_price (USD) = (Product_A_yearly_price * (12 - Product_A_yearly_discounts_period) + Product_A_yearly_price * Product_A_yearly_discounts_period * (100 - Product_A_yearly_discounts) ] / 12",
+                "Product_B_quarterly_discounted_price (USD) = (Product_B_quarterly_price * (12 - Product_B_quarterly_discounts_period) + Product_B_quarterly_price * Product_A_quarterly_discounts_period * (100 - Product_A_quarterly_discounts) ] / 12",
+                "Product_B_halfyearly_discounted_price (USD) = (Product_B_halfyearly_price * (12 - Product_B_halfyearly_discounts_period) + Product_B_halfyearly_price * Product_A_halfyearly_discounts_period * (100 - Product_A_halfyearly_discounts) ] / 12",
+                "Product_B_yearly_discounted_price (USD) = (Product_B_yearly_price * (12 - Product_B_yearly_discounts_period) + Product_A_yearly_price * Product_A_yearly_discounts_period * (100 - Product_A_yearly_discounts) ] / 12", ],
+            "Step 4 : Calculate the revenue for each product line" : ["Product_A_Revenue (USD) = Total_user_A_monthly_Billing * Product_A_monthly_price  + Total_user_A_quarterly_Billing  * Product_A_quarterly_discounted_price  +  Total_user_A_halfyearly_Billing * Product_A_halfyearly_discounted_price  + Total_user_A_yearly_Billing * Product_A_yearly_discounted_price" ,
+                "Product_B_Revenue (USD) = Total_user_B_monthly_Billing * Product_B_monthly_price  + Total_user_B_quarterly_Billing  * Product_B_quarterly_discounted_price  +  Total_user_B_halfyearly_Billing * Product_B_halfyearly_discounted_price  + Total_user_B_yearly_Billing * Product_B_halfyearly_discounted_price" ,],
+            "Step 5 : Total_Revenue": ["Revenue_product (USD) = Product_A_Revenue + Product_B_Revenue",
+                "Additional_revenue (USD) = Revenue_product * Additional_Revenue_Contribution/100",
+                "Total_Revenue (USD) = Revenue_product + Additional_revenue ",]
+            ]
+        }}
+    }}
+    
+    Example Output formula for monthly period:
+        {{ "assumptions":{{
+            "Product_A_share (%)" = 66,
+            "product_B_share (%)" = 24,
+            "Product_A_and_Product_B_share (%)" = 10,
+            "effective_rate (%)" = 96,  
+            "Product_A_price (USD)" = 5,
+            "Product_B_price (USD)" = 6,
+            "Product_A_discounts (%)" = 35,
+            "Product_B_discounts (%)" = 45,   
+            "Additional_Revenue_Contribution (%)" = 5                     
+        }}
+        "formula": {{
+            "Step 1: Identify user across different product/services":[" Total_user_A (#)= User_A * Product_A_share + User_A * Product_A_and_Product_B_share",
+                "Total_user_B (#) = User_B * Product_B_share + User_B * Product_A_and_Product_B_share"],
+            "Step 2: Breakdown the user base by plan tenure: "["Total_user_A_monthly_Billing (#) = Total_user_A * effective_rate",
+                "Total_user_B_monthly_Billing (#) = Total_user_B * effective_rate",],
+            "Step 3: Identify the pricing rate for each product/services":["Product_A_discounted_price (USD) = (Product_A_price * (100 - Product_A_discounts) / 100",
+                "Product_B_discounted_price (USD) = (Product_B_price * (100 - Product_B_discounts) / 100"],
+            "Step 4 : Calculate the revenue for each product line" : ["Product_A_Revenue (USD)= Total_user_A_monthly_Billing * Product_A_discounted_price" ,
+                "Product_B_Revenue (USD) = Total_user_B_monthly_Billing * Product_B_discounted_price",]
+            "Step 5 : Total_Revenue ": ["Revenue_product (USD) = Product_A_Revenue + Product_B_Revenue",
+                "Additional_revenue (USD) = Revenue_product * Additional_Revenue_Contribution/100",
+                "Total_Revenue (USD) = Revenue_product + Additional_revenue ",]
+        }}
+    }}
+    Let's think step-by-step. Do not solve equations, only write step-by-step formula. Keep the compact formula. Recheck to make sure consider {interval} period breakdown for formula. Keep units on left side of equations. If there is any unnecessy steps which is not used any where remove it, don't use it in formula.
+    """
+
+ 
