@@ -28,6 +28,7 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 
+client = anthropic.Anthropic(api_key="api03-MTJQgC3-5EaQ6vRqs4tSA3kmVeaeHcmmNS1nFkvQObj90QTwIkP3ZpdhHDA3_-Q8JJI8j1B45wW33DbQUZdelQ-iaeBJwAA", http_client=httpx.Client(verify=False))
 
 
 
